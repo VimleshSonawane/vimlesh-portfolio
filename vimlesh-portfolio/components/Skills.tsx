@@ -1,75 +1,81 @@
 const CATEGORIES = [
   {
-    label: "Project management",
+    label: "PM skills",
     items: [
-      "Project planning",
-      "Project coordination",
+      "Scope management",
+      "Schedule & timeline planning",
+      "Budget preparation & cost tracking",
+      "Risk identification & mitigation",
       "Stakeholder management",
-      "Risk management",
-      "Agile methodologies",
-      "PMO operations",
-      "Resource coordination",
-      "Event management",
+      "Resource allocation",
+      "Change management",
+      "Post-project evaluation",
     ],
   },
   {
-    label: "Software & analytics",
+    label: "Tools & technology",
     items: [
-      "Microsoft Project",
+      "MS Project",
+      "Asana",
       "Smartsheet",
       "Jira",
-      "Asana",
-      "Google Workspace",
-      "Tableau",
-      "Power BI",
-      "R",
-      "Python",
-      "SQL",
-      "SharePoint",
-      "ServiceNow",
+      "AutoCAD",
+      "MS Office Suite",
+      "Primavera",
     ],
   },
   {
-    label: "Working style",
+    label: "Data & analytics",
     items: [
-      "Team leadership",
-      "Cross-functional coordination",
-      "Problem-solving",
-      "Conflict management",
-      "Attention to detail",
-      "Adaptability",
+      "Power BI",
+      "Tableau",
+      "Excel (PivotTables & advanced charts)",
+      "KPI development & tracking",
+      "Root cause analysis",
+      "Forecasting & trend analysis",
     ],
   },
-];
-
-const CERTS = [
-  "Google Project Management Certificate",
-  "Jira Certification",
-  "Tableau Certification",
-  "Power BI Certification",
-  "Lean Six Sigma Certification",
+  {
+    label: "Leadership & soft skills",
+    items: [
+      "Team leadership",
+      "Decision making",
+      "Conflict resolution",
+      "Accountability",
+      "Communication",
+      "Negotiation",
+      "Problem solving",
+      "Strategic thinking",
+      "Collaboration",
+      "Adaptability",
+      "Critical thinking",
+      "Emotional intelligence",
+      "Relationship building",
+      "Presentation & public speaking",
+    ],
+  },
 ];
 
 export default function Skills() {
   return (
-    <section id="systems" className="relative px-6 py-28 border-t border-line hud-grid">
+    <section id="systems" className="relative px-6 py-24 border-t border-line">
       <div className="max-w-4xl mx-auto">
-        <span className="font-mono text-xs text-signal">SEC.04</span>
-        <h2 className="font-display text-3xl text-white mt-2 mb-12">
-          Systems
+        <span className="text-xs font-mono text-brand">06</span>
+        <h2 className="font-display text-3xl text-ink mt-2 mb-10 font-semibold">
+          Skills
         </h2>
 
-        <div className="space-y-10">
+        <div className="space-y-9">
           {CATEGORIES.map((cat) => (
             <div key={cat.label}>
-              <h3 className="font-mono text-xs text-mistDim mb-4">
-                {cat.label.toUpperCase()}
+              <h3 className="text-xs font-mono text-inkMute uppercase tracking-wide mb-3">
+                {cat.label}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {cat.items.map((item) => (
                   <span
                     key={item}
-                    className="font-mono text-xs text-mist border border-line px-3 py-1.5 hover:border-signalDim hover:text-signal transition-colors duration-200"
+                    className="text-sm text-inkSoft bg-paperRaised border border-line px-3 py-1.5 rounded-full hover:border-brand/40 hover:text-brand transition-colors duration-200"
                   >
                     {item}
                   </span>
@@ -77,25 +83,6 @@ export default function Skills() {
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="mt-14">
-          <h3 className="font-mono text-xs text-mistDim mb-4">
-            CREDENTIALS
-          </h3>
-          <div className="flex flex-wrap gap-2 mb-3">
-            {CERTS.map((cert) => (
-              <span
-                key={cert}
-                className="font-mono text-xs text-mist border border-line px-3 py-1.5"
-              >
-                {cert}
-              </span>
-            ))}
-          </div>
-          <div className="inline-block font-mono text-[10px] text-amber border border-amber/40 px-2 py-1">
-            ⚠ Confirm exact certification names, issuers, and completion dates
-          </div>
         </div>
       </div>
     </section>
