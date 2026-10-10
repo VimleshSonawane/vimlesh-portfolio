@@ -803,6 +803,8 @@ body{overflow-x:hidden}
 .pw[data-mode="vl"] .pn.on .card{transform:none!important}
 .prg .ptl{overflow-wrap:anywhere;hyphens:auto}
 @media (max-width:900px){.subcard .pgrid2{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.intro2 .lede{margin:0 0 12px!important;font-size:15.5px!important;line-height:1.62}
+.intro2 .lede+.core{margin-top:14px}
 /* recognition */
 .rec-hero{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);overflow:hidden}
 .rec-badge{background:var(--navy);color:var(--navy-ink);padding:34px 32px;display:flex;flex-direction:column;justify-content:space-between;gap:28px;position:relative}
@@ -968,7 +970,7 @@ details.rec .in p{margin:0 0 10px;max-width:80ch}
       <span class="status"><i></i>Open to PM roles in the US</span>
       <h1>Vimlesh Sonawane</h1>
       <p class="role">Project Manager</p>
-      <p class="lede">I’m Vimlesh Sonawane, a project manager who turns complex, many-stakeholder work into delivered results. Over 5+ years, I’ve co-founded and delivered two residential builds in Pune with zero scope deviation, run AI-supported IP enforcement operations at Amazon as the single point of contact for legal teams, brands, and leadership, earning the Most Valued Player Award, and planned live programs in Boston with partners including JPMorgan Chase and the Museum of African American History. A civil engineer and PMI GAC Scholar, I’m completing my MS in Project Management at Northeastern University, and I bring disciplined scope, schedule, and cost control, backed by data.</p>
+      <p class="lede">I’m Vimlesh Sonawane, a project manager and civil engineer who delivers complex projects across construction, e-commerce operations, and the creative economy. I pair engineering discipline with data-driven, AI-aware delivery, and I’m completing my MS in Project Management at Northeastern University as a PMI GAC Scholar.</p><p class="lede">My career began on construction sites in Pune. As a project coordinator intern at Sai Enterprise, I prepared quantity takeoffs for 150+ line items and tracked procurement against the schedule, preventing five work stoppages. I then co-founded Evolution Properties and delivered two residential homes from initiation to handover with zero scope deviation, using sustainable, cost-efficient materials. At Amazon, I spent nearly three years leading enterprise IP enforcement operations as the single point of contact for legal teams, brand partners, and leadership. I redesigned SOPs to reduce case turnaround time, built Power BI dashboards for leadership, and contributed operational insights to an AI-powered fraud detection model, and I earned the Most Valued Player Award. In Boston, as a project manager at MadeINcubator, I managed three live programs with partners including JPMorgan Chase and the Museum of African American History, and developed six new program concepts for leadership.</p><p class="lede">Across 20 case studies, from a $10 million risk management plan to an $11.98 million construction schedule and cost baseline, I apply scope, schedule, cost, risk, and stakeholder management using Agile and hybrid methods. I’m pursuing the PMP and looking for project management roles in the United States where I can bring structure and measurable results to cross-functional teams.</p>
       <ul class="core" aria-label="Industries"><li>Construction</li><li>E-commerce and AI-driven operations</li><li>Fashion and creative economy</li></ul>
       <div class="cta">
         <a class="btn primary" href="mailto:vimleshsonawane113@gmail.com">Email me</a>
@@ -1169,7 +1171,7 @@ function makeNet(c,o){
   const x=c.getContext("2d"),reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;let W,H,pts=[],pk=[],sp=[],raf,vis=false,mx=-9999,my=-9999,ox=0,oy=0,tx=0,ty=0;
   const host=c.parentElement;
   function size(){const r=c.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);W=r.width;H=r.height;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
-    const n=Math.round(Math.min(o.max||110,W*H/(o.dens||13000)));pts=Array.from({length:n},()=>{const z=.35+Math.random()*.65;return{x:Math.random()*W,y:Math.random()*H,z,vx:(Math.random()-.5)*.16*z,vy:(Math.random()-.5)*.16*z}})}
+    const n=Math.round(Math.min(o.max||110,W*H/(o.dens||13000)));pts=Array.from({length:n},()=>{const z=.35+Math.random()*.65;return{x:Math.random()*W,y:Math.random()*H,z,vx:(Math.random()-.5)*.3*z,vy:(Math.random()-.5)*.3*z}})}
   const burst=(bx,by,n,cols)=>{if(!cols)return;for(let k=0;k<n&&sp.length<420;k++){const a=Math.random()*6.283,v=.4+Math.random()*1.8;sp.push({x:bx,y:by,vx:Math.cos(a)*v,vy:Math.sin(a)*v-.4,l:1,r:.6+Math.random()*1.6,c:cols[k%cols.length]})}};
   function frame(){x.clearRect(0,0,W,H);for(const q of pts)if(q.hit)q.hit--;ox+=(tx-ox)*.025;oy+=(ty-oy)*.025;
     for(const p of pts){if(!reduce){p.x+=p.vx;p.y+=p.vy;if(p.x<-20||p.x>W+20)p.vx*=-1;if(p.y<-20||p.y>H+20)p.vy*=-1;
@@ -1182,7 +1184,7 @@ function makeNet(c,o){
       const md=(a.sx-mx)**2+(a.sy-my)**2;if(md<26000){x.globalAlpha=.5*(1-md/26000);x.strokeStyle=o.ac||o.c;x.beginPath();x.moveTo(a.sx,a.sy);x.lineTo(mx,my);x.stroke()}
       x.globalAlpha=(o.pa||.6)*a.z;x.fillStyle=o.c;x.beginPath();x.arc(a.sx,a.sy,1.4+a.z*2.2,0,6.3);x.fill()}
     if(!reduce&&mx>-999){for(const a of pts){const md=(a.sx-mx)**2+(a.sy-my)**2;if(md<900&&Math.random()<.04)burst(a.sx,a.sy,2,o.pw)}}
-    pk=pk.filter(p=>{p.t+=Math.min(.012,.22/Math.max(20,Math.hypot(p.b.sx-p.a.sx,p.b.sy-p.a.sy)));if(p.t>=1){burst(p.b.sx,p.b.sy,8,o.pw);return false}const px=p.a.sx+(p.b.sx-p.a.sx)*p.t,py=p.a.sy+(p.b.sy-p.a.sy)*p.t;x.globalAlpha=.95;x.fillStyle=o.ac||"#E2B55B";x.beginPath();x.arc(px,py,2.6,0,6.3);x.fill();x.globalAlpha=.25;x.beginPath();x.arc(px,py,7,0,6.3);x.fill();return true});
+    pk=pk.filter(p=>{p.t+=Math.min(.02,.38/Math.max(20,Math.hypot(p.b.sx-p.a.sx,p.b.sy-p.a.sy)));if(p.t>=1){burst(p.b.sx,p.b.sy,8,o.pw);return false}const px=p.a.sx+(p.b.sx-p.a.sx)*p.t,py=p.a.sy+(p.b.sy-p.a.sy)*p.t;x.globalAlpha=.95;x.fillStyle=o.ac||"#E2B55B";x.beginPath();x.arc(px,py,2.6,0,6.3);x.fill();x.globalAlpha=.25;x.beginPath();x.arc(px,py,7,0,6.3);x.fill();return true});
     sp=sp.filter(s=>{s.x+=s.vx*.6;s.y+=s.vy*.6;s.vx*=.965;s.vy=s.vy*.965+.02;s.l-=.009;if(s.l<=0)return false;x.globalAlpha=Math.max(0,s.l)*.95;x.fillStyle=s.c;x.beginPath();x.arc(s.x,s.y,s.r,0,6.3);x.fill();if(s.r>1.6){x.globalAlpha=s.l*.25;x.beginPath();x.arc(s.x,s.y,s.r*3,0,6.3);x.fill()}return true});
     x.globalAlpha=1;if(!reduce&&vis)raf=requestAnimationFrame(frame)}
   host.addEventListener("pointermove",e=>{const r=c.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;tx=(e.clientX/innerWidth-.5);ty=(e.clientY/innerHeight-.5)},{passive:true});
