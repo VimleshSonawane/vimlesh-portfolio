@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" style="color-scheme:light">
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Vimlesh Sonawane, Project Manager</title>
 <meta name="description" content="Vimlesh Sonawane, Project Manager with 5+ years across construction, e-commerce and AI-driven operations, and the fashion and creative economy. MS Project Management, Northeastern University.">
@@ -30,7 +31,7 @@
   --font:"Schibsted Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+@media (prefers-color-scheme:dark) and (max-width:0px){:root:not([data-theme="light"]){
   --paper:#0F151D;--card:#16202B;--line:#263241;--line2:#1F2A37;--ink:#E8ECF1;--soft:#C3CBD6;--mute:#8C97A6;
   --navy:#8FB3E0;--navy-ink:#0F151D;--navy-tint:#1A2738;--navy-line:#2C405A;--ok:#7CCB9C;--ok-tint:#16301F;
   --gold:#E2B55B;--gold-tint:#2A2212;--gold-line:#4A3C1C;--plan:#5B6878;--shadow:none}}
@@ -1191,7 +1192,7 @@ function makeNet(c,o){
   new IntersectionObserver(es=>{vis=es[0].isIntersecting;cancelAnimationFrame(raf);if(vis)frame()}).observe(c);
 }
 (function(){
-  const dark=matchMedia("(prefers-color-scheme: dark)").matches&&document.documentElement.dataset.theme!=="light";
+  const dark=false;
   makeNet($("#net"),{c:dark?"#8FB3E0":"#1E3A5F",ac:"#C9A24B",pa:1,la:.7,dens:8500,link:21000,pw:["#FFFFFF","#BFD3EE","#E2B55B","#FFFFFF"]});
   $$("main section").forEach(s=>{if(s.classList.contains("herosec"))return;const dk=s.classList.contains("navy")||s.classList.contains("deep");s.classList.add("netsec");const cv=document.createElement("canvas");cv.className="bandnet";cv.setAttribute("aria-hidden","true");s.prepend(cv);makeNet(cv,dk?{c:"#E3EDFA",ac:"#E2B55B",pa:1,la:.6,dens:11000,max:110,link:21000,pw:["#FFFFFF","#E8F0FB","#E2B55B"]}:{c:dark?"#8FB3E0":"#1E3A5F",ac:"#C9A24B",pa:.95,la:.55,dens:12000,max:105,link:21000,pw:["#FFFFFF","#9DB8DC","#E2B55B","#FFFFFF"]})});
 })();
