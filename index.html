@@ -15,7 +15,7 @@
 <meta name="theme-color" content="#0B0B0B">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230E1B2E'/%3E%3Ctext x='50' y='66' font-family='Georgia,serif' font-size='46' text-anchor='middle' fill='%23C9A45C'%3EVS%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--k:#0B0B0B;--k2:#161412;--w:#FFFFFF;--iv:#FBF9F5;--gold:#C9A45C;--gold2:#A8823F;--goldl:#E8D5A8;--g2:#E9E4DA;--g4:#4E4943;--hov:#9E1B32;
  --serif:"Cormorant Garamond",Didot,Georgia,serif;--disp:"Bodoni Moda",Didot,"Bodoni 72",Georgia,serif;--script:"Pinyon Script","Snell Roundhand",cursive;--blush:#F8EDE8;--blush2:#F1DDD5;--rose:#C4917F;--sans:"Jost","Avenir Next",Futura,ui-sans-serif,system-ui,sans-serif;
@@ -989,6 +989,72 @@ a{color:inherit}
 .cl-tabs button:focus-visible{outline:2px solid #C9A45C;outline-offset:3px}
 .cl-pane{padding-top:22px!important}
 @media (max-width:700px){.cl-tabs button{flex:0 0 calc(50% - 4px)}}
+
+/* ===== one refined type system ===== */
+:root{--disp:"Playfair Display","Cormorant Garamond",Georgia,serif!important;--serif:"Cormorant Garamond",Georgia,serif;--sans:"Manrope","Helvetica Neue",ui-sans-serif,system-ui,sans-serif}
+body{font-family:var(--sans)!important;letter-spacing:.005em}
+h1,h2,h3,h4,.logo{font-family:var(--disp)!important}
+.hero h1{font-weight:400;letter-spacing:-.02em}
+.sh h2{font-weight:400!important;letter-spacing:-.015em}
+/* ===== skills: categorised cards ===== */
+.gl-g{grid-template-columns:1.55fr 1fr .85fr!important}
+.sk-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sk-c{background:#fff;border:1px solid #E9E4DA;padding:12px 12px 12px;transition:border-color .3s,transform .3s,box-shadow .3s}
+.sk-c.wide{grid-column:1/-1}
+.sk-c:hover{border-color:#C9A45C;transform:translateY(-2px);box-shadow:0 16px 24px -20px rgba(11,11,11,.4)}
+.sk-h{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.sk-i{width:28px;height:28px;border-radius:50%;border:1px solid #C9A45C;display:grid;place-items:center;flex-shrink:0;transition:background .3s}
+.sk-i svg{width:15px;height:15px;fill:none;stroke:#0B0B0B;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s}
+.sk-c:hover .sk-i{background:#0B0B0B}.sk-c:hover .sk-i svg{stroke:#E8D5A8}
+.sk-h b{font:600 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#0B0B0B}
+.sk-h em{margin-left:auto;font:500 11px var(--sans);font-style:normal;color:#A8823F}
+.sk-c .gl-chips span{font-size:11.5px;padding:3px 8px}
+/* ===== certifications: certificate-style rows ===== */
+.gl-ce{display:grid;gap:8px}
+.gc{display:grid!important;grid-template-columns:38px minmax(0,1fr) auto!important;gap:12px!important;align-items:center!important;padding:10px 12px!important;border:1px solid #E9E4DA!important;background:#fff;position:relative;transition:border-color .3s}
+.gc::before{content:"";position:absolute;inset:3px;border:1px solid #F1E7DD;pointer-events:none}
+.gc:hover{border-color:#C9A45C!important}
+.gc-seal{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:600 11px var(--sans);letter-spacing:.06em;color:#0B0B0B;background:radial-gradient(circle,#FBF4E4 0 55%,transparent 56%),conic-gradient(#B07E5E,#E8D5A8,#C9A45C,#B07E5E);position:relative;z-index:1}
+.gc-seal.ip{background:radial-gradient(circle,#fff 0 55%,transparent 56%),repeating-conic-gradient(#C9A45C 0 10deg,#F1E7DD 10deg 20deg)}
+.gc h4{margin:0;font:500 15px/1.25 var(--disp)!important;color:#0B0B0B;position:relative;z-index:1}
+.gc p{margin:2px 0 0;font-size:11.5px;line-height:1.4;color:var(--g4);position:relative;z-index:1}
+.gc-v{position:relative;z-index:2;font:600 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border:1px solid #0B0B0B;padding:6px 9px;cursor:pointer;list-style:none;transition:background .3s,color .3s;white-space:nowrap}
+.gc-v::-webkit-details-marker{display:none}
+.gc-v:hover{background:#0B0B0B;color:#fff}
+.gc-st{position:relative;z-index:1;font:600 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#A8823F}
+.gc-dd{position:relative}
+.gc-dd>div{position:absolute;right:0;top:calc(100% + 6px);z-index:20;min-width:190px;background:#0B0B0B;padding:8px;display:grid;gap:2px;box-shadow:0 20px 30px -18px rgba(0,0,0,.5)}
+.gc-dd a{color:#fff;font-size:12px;text-decoration:none;padding:7px 9px;transition:background .25s}.gc-dd a:hover{background:#2A2622;color:#E8D5A8}
+@media (max-width:1000px){.gl-g{grid-template-columns:1fr!important}.sk-g{grid-template-columns:1fr}}
+.gl-g{grid-template-columns:1.35fr 1.2fr .75fr!important}
+.gc{grid-template-columns:32px minmax(0,1fr) auto!important;gap:10px!important;padding:8px 10px!important}
+.gc-seal{width:32px;height:32px;font-size:10px}
+.gc h4{font-size:13.5px!important;line-height:1.3!important}
+.gc p{font-size:11px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gc p.gc-m{white-space:normal;color:#A8823F!important}
+.gc-st.ok{color:#2F6B4F}
+.gl-ce{gap:6px!important}
+.sk-g{grid-template-columns:repeat(2,minmax(0,1fr))!important}.sk-c.wide{grid-column:1/-1!important}.sk-h b{font-size:10px!important;letter-spacing:.12em!important}.sk-c .gl-chips span{font-size:11px!important;padding:3px 7px!important}
+.sk-c{padding:10px 12px!important}.sk-h{margin-bottom:7px!important}
+
+.cr{font:400 19px/1.35 var(--disp);color:#0B0B0B;margin-bottom:16px}
+.cr span{font:italic 400 16px var(--serif);color:#A8823F}
+.cstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.cs{background:#0B0B0B;color:#fff;padding:14px 14px 12px;position:relative;overflow:hidden}
+.cs::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(232,213,168,.22),transparent);transform:skewX(-20deg)}
+.pn.on .cs::after{animation:cssh 1.4s ease-out .3s}
+@keyframes cssh{to{left:130%}}
+.cs b{display:block;font:500 30px/1 var(--disp);color:#E8D5A8}
+.cs i{display:block;margin-top:7px;font:500 10.5px/1.35 var(--sans);font-style:normal;letter-spacing:.06em;color:rgba(255,255,255,.82)}
+.pn.on .cs{animation:csin .6s cubic-bezier(.2,.7,.2,1) both}.pn.on .cs:nth-child(2){animation-delay:.08s}.pn.on .cs:nth-child(3){animation-delay:.16s}
+@keyframes csin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.chl{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.chl li{position:relative;padding-left:22px;font-size:15px;line-height:1.65;color:#2B2724}
+.chl li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:10px;border:1.5px solid #C9A45C;transform:rotate(45deg)}
+.chl strong{font-weight:700;color:#0B0B0B}
+.pn.on .chl li{animation:csin .6s cubic-bezier(.2,.7,.2,1) both}.pn.on .chl li:nth-child(1){animation-delay:.2s}.pn.on .chl li:nth-child(2){animation-delay:.28s}.pn.on .chl li:nth-child(3){animation-delay:.36s}
+.cl-pane{min-height:330px!important}
+@media (max-width:700px){.cstats{grid-template-columns:1fr}.cl-pane{min-height:520px!important}}
 </style>
 </head>
 <body>
@@ -1008,12 +1074,7 @@ a{color:inherit}
   <h1>Vimlesh <em class="gtxt">Sonawane</em></h1>
   <div class="role">Project Manager <span class="role-s">Civil engineer by training, delivering across industries</span></div>
   <p class="lede lead1">I’m a project manager with a civil engineering foundation, delivering complex projects across construction, e-commerce operations, and the creative economy with engineering discipline and data-driven, AI-aware delivery.</p>
-  <ol class="cline">
-   <li><span class="cl-k">Construction<em>Pune, 2019 to 2021</em></span><div><p>As a project coordinator intern at Sai Enterprise, prepared quantity takeoffs for 150+ line items and tracked procurement against the schedule, preventing five work stoppages.</p><p>Co-founded Evolution Properties and delivered two residential homes from initiation to handover with zero scope deviation, using sustainable, cost-efficient materials.</p></div></li>
-   <li><span class="cl-k">Amazon<em>Pune, 2021 to 2024</em></span><div><p>Led enterprise IP enforcement operations for nearly three years as the single point of contact for legal teams, brand partners, and leadership.</p><p>Redesigned SOPs to cut case turnaround time, built Power BI dashboards for leadership, fed operational insights into an AI-powered fraud detection model, and earned the Most Valued Player Award.</p></div></li>
-   <li><span class="cl-k">MadeINcubator<em>Boston, 2026</em></span><div><p>Managed three live programs with partners including JPMorgan Chase and the Museum of African American History, and developed six new program concepts for leadership.</p></div></li>
-   <li><span class="cl-k">Education<em>Boston, 2024 to 2026</em></span><div><p>Completing an MS in Project Management at Northeastern University. Selected as a GAC Scholar by the Project Management Institute’s Global Accreditation Center, which accredits project management degree programs worldwide.</p></div></li>
-  </ol>
+  <ol class="cline"><li><span class="cl-k">Construction<em>Pune, 2019 to 2021</em></span><div><div class="cr">Project Coordinator Intern, Sai Enterprise <span>then</span> Assistant Project Manager and co-founder, Evolution Properties</div><div class="cstats"><span class="cs"><b>150+</b><i>Line items quantified</i></span><span class="cs"><b>5</b><i>Work stoppages prevented</i></span><span class="cs"><b>2</b><i>Homes delivered, zero scope deviation</i></span></div><ul class="chl"><li><strong>Co-founded a construction venture</strong> and delivered two residential projects from initiation to handover, holding scope, schedule, and budget across concurrent builds.</li><li><strong>Prevented five work stoppages</strong> by tracking material deliveries and purchase orders against the schedule and flagging shortages early.</li><li><strong>Kept six trades aligned</strong> with quantity takeoffs, RFI and submittal logs, and weekly progress reports to the project manager.</li></ul></div></li><li><span class="cl-k">Amazon<em>Pune, 2021 to 2024</em></span><div><div class="cr">Operations and Process Improvement Specialist, Intellectual Property</div><div class="cstats"><span class="cs"><b>~3 yrs</b><i>Enterprise IP operations</i></span><span class="cs"><b>Sole</b><i>Point of contact for legal, brands and leadership</i></span><span class="cs"><b>MVP</b><i>Most Valued Player Award</i></span></div><ul class="chl"><li><strong>Owned enterprise-scale IP enforcement</strong> as the single point of contact across legal teams, brand partners, rights owners, and senior management.</li><li><strong>Cut case resolution time</strong> by redesigning SOPs after root cause analysis of workflow bottlenecks.</li><li><strong>Shaped an AI fraud model and leadership reporting</strong> by feeding operational insights into fraud detection and building Power BI dashboards for KPIs and defect trends.</li></ul></div></li><li><span class="cl-k">MadeINcubator<em>Boston, 2026</em></span><div><div class="cr">Project Manager, Boston’s first BIPOC-focused fashion incubator</div><div class="cstats"><span class="cs"><b>3</b><i>Live programs delivered</i></span><span class="cs"><b>6</b><i>New program concepts</i></span><span class="cs"><b>2</b><i>Planned initiatives</i></span></div><ul class="chl"><li><strong>Delivered three live programs</strong> with partners including JPMorgan Chase and the Museum of African American History, coordinating leadership, sponsors, and venues.</li><li><strong>Ran sponsor communications and venue logistics</strong> including the two-floor venue plan for Rooted and Rising, a Black History Month artist talk.</li><li><strong>Shaped the program pipeline</strong> with six new program concepts and a planning document for leadership review.</li></ul></div></li><li><span class="cl-k">Education<em>Boston, 2024 to 2026</em></span><div><div class="cr">MS in Project Management, Northeastern University. BE in Civil Engineering, SITS Pune</div><div class="cstats"><span class="cs"><b>GAC</b><i>Scholar, PMI Global Accreditation Center</i></span><span class="cs"><b>20</b><i>Project case studies</i></span><span class="cs"><b>$11.98M</b><i>Construction baseline built</i></span></div><ul class="chl"><li><strong>Selected as a GAC Scholar</strong> by the Project Management Institute’s Global Accreditation Center, which accredits project management degree programs worldwide.</li><li><strong>Applied the full PM toolkit</strong> across 20 case studies, from a $10 million risk management plan to an $11.98 million construction schedule and cost baseline.</li><li><strong>Published research</strong> on eco-friendly concrete with rice husk ash and glass fibre during my civil engineering degree.</li></ul></div></li></ol>
   <p class="lede lead2">Across 20 case studies, from a $10 million risk management plan to an $11.98 million construction schedule and cost baseline, I apply scope, schedule, cost, risk, and stakeholder management using Agile and hybrid methods. I’m pursuing the PMP and looking for project management roles in the United States.</p>
   <div class="chips"><span>Construction</span><span>E-commerce and AI-driven operations</span><span>Fashion and creative economy</span></div>
   <div class="cta"><a class="btn" href="mailto:vimleshsonawane113@gmail.com">Email Vimlesh</a><a class="btn line" href="https://www.linkedin.com/in/vimlesh25" target="_blank" rel="noopener">LinkedIn</a><a class="btn line" href="https://github.com/VimleshSonawane/r-analytics-projects" target="_blank" rel="noopener">GitHub</a></div>
@@ -1398,11 +1459,14 @@ addEventListener("scroll",()=>requestAnimationFrame(onS),{passive:true});onS();
 
 <script>
 (function(){
- const G=[["Project management",["Scope and WBS","Scheduling","Earned value","Risk and EMV","Stakeholders","Agile and Scrum"]],["Construction",["Quantity takeoffs","RFIs and submittals","Procurement","Site documentation"]],["Analytics",["R","Power BI","Tableau","Root cause analysis","Lean Six Sigma"]],["Software",D.tools.map(x=>x.n).filter(n=>!["R","Power BI","Tableau"].includes(n))]];
- let k=0;document.getElementById("glsk").innerHTML=G.map(g=>`<div class="gl-grp"><b>${esc(g[0])}</b><div class="gl-chips">${g[1].map(s=>`<span style="transition-delay:${(k++)*25}ms">${esc(s)}</span>`).join("")}</div></div>`).join("");
-  {const pc=D.certs.filter(c=>/^Procore/.test(c.name)),rest=D.certs.filter(c=>!/^Procore/.test(c.name));const row=c=>`<li><i class="${c.status==="Completed"?"":"ip"}" title="${esc(c.status)}"></i><span>${esc(c.name)}<br><small style="color:var(--g4)">${esc(c.by)}</small></span>${c.url?`<a href="${esc(c.url)}" target="_blank" rel="noopener">Verify</a>`:c.status!=="Completed"?"<em>In progress</em>":""}</li>`;
- const proc=pc.length?`<li class="gl-pc"><i></i><span>Procore Certified Project Manager <small style="color:var(--g4)">(${pc.length} certifications, Procore Technologies, 2026)</small><span class="gl-pct">${pc.map(c=>`<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name.replace(/.*\((.*)\)/,"$1"))}</a>`).join("")}</span></span><span></span></li>`:"";
+ const ICO={pm:'<path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="17" r="3"/>',co:'<path d="M3 21h18M6 21V9l6-4 6 4v12"/><path d="M10 21v-6h4v6"/>',an:'<path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 4-6"/>',sw:'<rect x="3" y="4" width="18" height="12" rx="1"/><path d="M8 20h8M12 16v4"/>',ai:'<path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z"/><path d="M18 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/>'};
+ const G=[["pm","Project management",["Scope and WBS","Scheduling and critical path","Earned value","Risk and EMV","Stakeholder management","Agile and Scrum","Change control"]],["co","Construction",["Quantity takeoffs","RFIs and submittals","Procurement tracking","Site documentation","Contractor coordination"]],["an","Analytics and process",["R","Power BI","Tableau","Root cause analysis","Lean Six Sigma"]],["sw","PM and construction software",["Procore","MS Project","Primavera P6","Smartsheet","Asana","Jira","AutoCAD"]],["ai","Productivity and AI",["Excel","Google Workspace","MS Office","Generative AI tools"]]];
+ let k=0;document.getElementById("glsk").innerHTML=`<div class="sk-g">${G.map((g,i)=>`<div class="sk-c${i===0?" wide":""}"><div class="sk-h"><span class="sk-i"><svg viewBox="0 0 24 24" aria-hidden="true">${ICO[g[0]]}</svg></span><b>${esc(g[1])}</b><em>${g[2].length}</em></div><div class="gl-chips">${g[2].map(s=>`<span style="transition-delay:${(k++)*22}ms">${esc(s)}</span>`).join("")}</div></div>`).join("")}</div>`;
+  {const pc=D.certs.filter(c=>/^Procore/.test(c.name)),rest=D.certs.filter(c=>!/^Procore/.test(c.name));const ini=s=>s.split(/[\s,]+/).filter(w=>/^[A-Z]/.test(w)).slice(0,2).map(w=>w[0]).join("");
+ const row=c=>`<li class="gc"><span class="gc-seal${c.status==="Completed"?"":" ip"}">${esc(ini(c.by))}</span><div><h4>${esc(c.name)}</h4><p>${esc(c.by.split(",")[0])}, ${esc(c.when)}</p></div>${c.url?`<a class="gc-v" href="${esc(c.url)}" target="_blank" rel="noopener">Verify</a>`:`<span class="gc-st${c.status==="Completed"?" ok":""}">${c.status==="Completed"?"Completed":"In progress"}</span>`}</li>`;
+ const proc=pc.length?`<li class="gc"><span class="gc-seal">PT</span><div><h4>Procore Certified Project Manager</h4><p>Procore Technologies, Oct 2026</p><p class="gc-m">4 modules: financial, quality and safety, resource planning, resource tracking</p></div><details class="gc-dd"><summary class="gc-v">Verify</summary><div>${pc.map(c=>`<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name.replace(/.*\((.*)\)/,"$1"))}</a>`).join("")}</div></details></li>`:"";
  document.getElementById("glce").innerHTML=row(rest[0])+proc+rest.slice(1).map(row).join("");}
+
  const mvp=D.awards.find(a=>/Most Valued/.test(a.name));
  document.getElementById("glaw").innerHTML=`<div class="gl-aw"><span class="md"><b>G</b></span><div><h3>GAC Scholar</h3><p>Project Management Institute Global Accreditation Center, 2026. Selected from students in accredited project management degree programs worldwide.</p></div></div>
  <div class="gl-aw"><span class="md"><b>A</b></span><div><h3>${esc(mvp.name)}</h3><p>${esc(mvp.by)}, ${esc(mvp.when)}</p>${mvp.url?`<a href="${esc(mvp.url)}" target="_blank" rel="noopener">View credential</a>`:""}</div></div>`;
