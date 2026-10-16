@@ -936,6 +936,38 @@ a{color:inherit}
 .pv-n{margin:14px 0 0;font-size:13px;color:var(--g4)}
 @media (max-width:1000px){.pv{grid-template-columns:1fr}.pvf{grid-template-columns:repeat(2,minmax(0,1fr))}.pvf::before{display:none}}
 @media (prefers-reduced-motion:reduce){.cline li{opacity:1;transform:none;animation:none}.pvf li{opacity:1;animation:none}.pv .pvb-r .tr i{width:var(--w)}}
+
+/* ===== spacious, interactive hero ===== */
+.hero{padding:110px 0 130px!important}
+.hg{gap:90px!important}
+.hero .status{margin-bottom:8px}
+.hero h1{margin:26px 0 16px!important}
+.hero .role{margin-bottom:34px!important;display:flex;flex-direction:column;gap:8px}
+.role-s{font:italic 400 17px/1.4 var(--serif);letter-spacing:0;text-transform:none;color:var(--g4)}
+.lead1{margin-bottom:34px!important;max-width:56ch}
+.cl-tabs{display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid #E9E4DA;position:relative}
+.cl-tabs button{background:none;border:0;padding:14px 18px 14px 0;margin-right:22px;font:400 20px/1 var(--disp);color:#9A928A;cursor:pointer;transition:color .3s;text-align:left}
+.cl-tabs button em{display:block;margin-top:6px;font:500 9.5px var(--sans);font-style:normal;letter-spacing:.18em;text-transform:uppercase;color:#C9B89A;transition:color .3s}
+.cl-tabs button.on,.cl-tabs button:hover{color:#0B0B0B}.cl-tabs button.on em{color:#A8823F}
+.cl-ink{position:absolute;bottom:-1px;left:0;height:2px;background:linear-gradient(90deg,#B07E5E,#C9A45C,#C4917F);transition:transform .5s cubic-bezier(.2,.7,.2,1),width .5s cubic-bezier(.2,.7,.2,1)}
+.cl-pane{position:relative;min-height:150px;padding:26px 0 8px}
+.cl-pane .pn{position:absolute;inset:26px 0 auto 0;opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s;pointer-events:none}
+.cl-pane .pn.on{position:relative;inset:auto;opacity:1;transform:none;pointer-events:auto}
+.cl-pane p{margin:0 0 12px;font-size:16px;line-height:1.75;color:#2B2724;max-width:60ch}
+.cl-prog{height:2px;background:#F1E7DD;margin:6px 0 34px;overflow:hidden}.cl-prog i{display:block;height:100%;width:0;background:#C9A45C}
+.cl-prog i.run{animation:clp 7s linear forwards}@keyframes clp{to{width:100%}}
+.lead2{margin-bottom:34px!important;max-width:58ch;line-height:1.8!important}
+.hero .chips{margin:0 0 34px!important;gap:10px!important}
+.hero .cta{gap:14px!important}
+.now{margin-top:26px!important;padding:20px 22px!important}
+.tblock2{margin-top:44px!important}
+@media (max-width:700px){.cl-tabs button{font-size:17px;margin-right:14px}.cl-pane{min-height:220px}}
+@media (prefers-reduced-motion:reduce){.cl-prog{display:none}}
+.hero h1 em.gtxt{background:none!important;-webkit-text-fill-color:initial}
+.hero h1 em .ch{color:#BF9455!important;-webkit-text-fill-color:#BF9455}
+.cl-tabs{flex-wrap:nowrap!important}.cl-tabs button{flex:1;margin-right:0!important;padding:14px 12px 14px 0!important;font-size:18px!important}
+@media (max-width:700px){.cl-tabs{flex-wrap:wrap!important}.cl-tabs button{flex:0 0 50%}}
+.hero h1{font-size:clamp(50px,5.6vw,86px)!important}.hero h1 em{white-space:nowrap;display:inline-block}.hero h1>span{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -953,8 +985,8 @@ a{color:inherit}
  <div class="rv" style="--d:120ms">
   <span class="status"><i></i>Open to project management roles in the US</span>
   <h1>Vimlesh <em class="gtxt">Sonawane</em></h1>
-  <div class="role">Project Manager and Civil Engineer</div>
-  <p class="lede lead1">I’m a project manager and civil engineer who delivers complex projects across construction, e-commerce operations, and the creative economy, pairing engineering discipline with data-driven, AI-aware delivery.</p>
+  <div class="role">Project Manager <span class="role-s">Civil engineer by training, delivering across industries</span></div>
+  <p class="lede lead1">I’m a project manager with a civil engineering foundation, delivering complex projects across construction, e-commerce operations, and the creative economy with engineering discipline and data-driven, AI-aware delivery.</p>
   <ol class="cline">
    <li><span class="cl-k">Construction<em>Pune, 2019 to 2021</em></span><div><p>As a project coordinator intern at Sai Enterprise, prepared quantity takeoffs for 150+ line items and tracked procurement against the schedule, preventing five work stoppages.</p><p>Co-founded Evolution Properties and delivered two residential homes from initiation to handover with zero scope deviation, using sustainable, cost-efficient materials.</p></div></li>
    <li><span class="cl-k">Amazon<em>Pune, 2021 to 2024</em></span><div><p>Led enterprise IP enforcement operations for nearly three years as the single point of contact for legal teams, brand partners, and leadership.</p><p>Redesigned SOPs to cut case turnaround time, built Power BI dashboards for leadership, fed operational insights into an AI-powered fraud detection model, and earned the Most Valued Player Award.</p></div></li>
@@ -1362,6 +1394,22 @@ addEventListener("scroll",()=>requestAnimationFrame(onS),{passive:true});onS();
  // fill the detailed certifications (rendered before the container existed)
  const cg=document.getElementById("certg");if(cg&&!cg.children.length)cg.innerHTML=D.certs.map((c,i)=>`<div class="crt rv in" style="--d:${(i%3)*80}ms"><div class="crt-top"><span class="crt-st${c.status==="Completed"?"":" ip"}">${esc(c.status)}</span><span class="crt-n">${String(i+1).padStart(2,"0")}</span></div><h3>${esc(c.name)}</h3><p>${esc(c.by)}</p><p class="crt-d">${esc(c.when)}</p>${c.url?`<a class="crt-l" href="${esc(c.url)}" target="_blank" rel="noopener">View credential<i></i></a>`:""}</div>`).join("");
  const pv=document.getElementById("pv");if(pv)new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){pv.classList.add("in");o.disconnect()}},{threshold:.25}).observe(pv);
+})();
+</script>
+
+<script>
+(function(){const ol=document.querySelector(".cline");if(!ol)return;const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ const items=[...ol.children].map(li=>({k:li.querySelector(".cl-k").childNodes[0].textContent.trim(),w:li.querySelector(".cl-k em").textContent,h:li.querySelector("div").innerHTML}));
+ const box=document.createElement("div");box.className="cl-box";
+ box.innerHTML=`<div class="cl-tabs" role="tablist">${items.map((x,i)=>`<button type="button" role="tab" aria-selected="${i===0}" data-i="${i}"${i===0?' class="on"':""}>${x.k}<em>${x.w}</em></button>`).join("")}<span class="cl-ink"></span></div><div class="cl-pane">${items.map((x,i)=>`<div class="pn${i===0?" on":""}" role="tabpanel">${x.h}</div>`).join("")}</div><div class="cl-prog"><i></i></div>`;
+ ol.replaceWith(box);
+ const bs=[...box.querySelectorAll(".cl-tabs button")],ps=[...box.querySelectorAll(".pn")],ink=box.querySelector(".cl-ink"),pr=box.querySelector(".cl-prog i");let cur=0,tm=null,hold=false;
+ function show(i){cur=(i+items.length)%items.length;bs.forEach((b,k)=>{b.classList.toggle("on",k===cur);b.setAttribute("aria-selected",k===cur)});ps.forEach((p,k)=>p.classList.toggle("on",k===cur));const b=bs[cur];ink.style.width=b.offsetWidth-12+"px";ink.style.transform=`translateX(${b.offsetLeft}px)`;ink.style.top=(b.offsetTop+b.offsetHeight-1)+"px";if(!reduce&&!hold){pr.classList.remove("run");void pr.offsetWidth;pr.classList.add("run")}}
+ bs.forEach((b,i)=>b.addEventListener("click",()=>{hold=true;pr.classList.remove("run");clearInterval(tm);show(i)}));
+ box.addEventListener("pointerenter",()=>{if(!hold){clearInterval(tm);pr.classList.remove("run")}});
+ box.addEventListener("pointerleave",()=>{if(!hold){show(cur);start()}});
+ function start(){if(reduce)return;clearInterval(tm);tm=setInterval(()=>show(cur+1),7000)}
+ addEventListener("resize",()=>show(cur));setTimeout(()=>{show(0);start()},600);
 })();
 </script>
 </body>
