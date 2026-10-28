@@ -1904,7 +1904,9 @@ addEventListener("scroll",()=>requestAnimationFrame(onS),{passive:true});onS();
    var pdash = document.getElementById("pdash");
    function watch(){
      var pg = document.getElementById("pg"); if (!pg) return false;
-     new MutationObserver(function(){ applyFilters(); }).observe(pdash, {childList:true, subtree:true});
+     /* Pause observing while filtering: #pfnote sits inside #pdash, so rewriting it would re-trigger the observer forever. */
+     var mo = new MutationObserver(function(){ mo.disconnect(); applyFilters(); mo.observe(pdash, {childList:true, subtree:true}); });
+     mo.observe(pdash, {childList:true, subtree:true});
      applyFilters(); return true;
    }
    if (!watch()) { var tries = 0, iv = setInterval(function(){ if (watch() || ++tries > 30) clearInterval(iv); }, 300); }
