@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Approval Workflow Improvement — Vimlesh Sonawane</title>
+<style>body{font-family:system-ui,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#222;line-height:1.6}a{color:#0b5fff}h1{font-size:30px}.muted{color:#666}</style>
+</head>
+<body>
+<p><a href="https://vimleshsonawane.com">Back to portfolio</a></p>
+<h1>Approval Workflow Improvement</h1>
+<p class="muted">A project by Vimlesh Sonawane, Project Manager. Self-initiated DMAIC project on real public data (BPI Challenge 2020). Stakeholders were role-played; the fixes are proposed, not implemented.</p>
+<h2>What I created</h2>
+<p>I scoped and ran a DMAIC (Define, Measure, Analyze, Improve, Control) project on a university's travel-expense approval process: a charter with three targets, a stakeholder map and RACI, a baseline from the real event log, as-is and to-be process maps, a root-cause analysis, a what-if model of three proposed fixes, and a two-wave roadmap and control plan backed by a RAID log and milestones.</p>
+<h2>Live site</h2>
+<p>Walk through the project: the DMAIC journey, the real 2018 process map with its three bottlenecks, the baseline charts, a scenario explorer for the fixes, the RAID log, and the roadmap and control plan.</p>
+<p><a href="https://approval-flow.vimleshsonawane.com/">Open the live site</a></p>
+<h2>What I analysed</h2>
+<p>The 2018 log covers 8,260 claims. The median paid claim took 8.05 days from submission to payment, the slowest 1 in 10 took more than 20.25 days (P90), and 13.14% of submitted claims (1,072 of 8,160) were rejected at least once. I found three bottlenecks:</p>
+<ul>
+<li><strong>Batched payment runs.</strong> 99.66% of payments were made on a Monday or Thursday, and the median wait for the payment run was 3.21 days, the longest of any step.</li>
+<li><strong>Long approval tails.</strong> The slowest 10% waited 4.85 days for the budget owner, 6.21 days for the supervisor and 6.83 days before the payment request.</li>
+<li><strong>Rework from rejections.</strong> Rejected claims took a median 13.21 days to pay, against 7.34 days for claims never rejected. 253 of the 1,072 rejected claims had a zero amount.</li>
+</ul>
+<h2>What-if model (estimates, not results)</h2>
+<p>Three proposed fixes: F1 daily payment runs, F2 a claim checklist with an amount &gt; 0 rule, and F3 approval reminders after 3 days. Modelled together on the 2018 data (scenario S6):</p>
+<ul>
+<li>P90 days to payment: 20.25 to 8.74 (target 14 or less)</li>
+<li>Claims rejected at least once: 13.14% to 7.30% (target 8% or less). This is over the 7,907 claims left after zero-amount claims are blocked; it is 7.07% over all 8,160.</li>
+<li>Wait for the payment run: 3.21 days to 1.00 day (target 1 day or less)</li>
+</ul>
+<p>None of the fixes was implemented. The 40% cut in Administration rejections is an assumption; the zero-amount effect is observed in the data.</p>
+<h2>Significance</h2>
+<p>This project shows how I run process improvement as a project: agree the problem and targets with a sponsor, measure before proposing anything, separate what the data proves from what is a hypothesis, and hand over a phased roadmap with a control plan that names who checks each KPI, how often, and what triggers action.</p>
+<h2>Tools and methodologies used</h2>
+<p>DMAIC; process mapping; root-cause analysis (fishbone); impact/effort prioritisation; what-if modelling; RAID management; milestones and a two-wave roadmap; a control plan. Project tools: Smartsheet (schedule, RAID log, sponsor dashboard, roadmap, control plan), Asana (tasks, change requests, status updates), Miro (stakeholder map, RACI, process maps, fishbone), Tableau (baseline dashboard). Analysis: Python.</p>
+<h2>What is real and what is not</h2>
+<ul>
+<li><strong>Real:</strong> the data, a published event log verified against the publisher's checksum.</li>
+<li><strong>Role-played:</strong> the stakeholders (sponsor, process owner, approvers, payments team). There was no access to the real organisation.</li>
+<li><strong>Proposed, not implemented:</strong> the fixes and the roadmap.</li>
+<li><strong>Estimates, not results:</strong> the scenarios are what-if models on the 2018 data.</li>
+</ul>
+<h2>Data credit</h2>
+<p>van Dongen, Boudewijn (2020). BPI Challenge 2020: Domestic Declarations. 4TU.ResearchData. <a href="https://doi.org/10.4121/uuid:3f422315-ed9d-4882-891f-e180b5b4feb5">doi:10.4121/uuid:3f422315-ed9d-4882-891f-e180b5b4feb5</a>. Licensed <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+<h2>Links</h2>
+<ul>
+<li><a href="https://approval-flow.vimleshsonawane.com/">Live site</a></li>
+<li><a href="https://github.com/VimleshSonawane/business-flow-improvement">Project repo on GitHub</a></li>
+<li><a href="https://public.tableau.com/app/profile/vimlesh.vilas.sonawane/viz/ApprovalWorkflowBaselineBPI2020realdata/Baselinedashboard">Tableau dashboard</a></li>
+</ul>
+</body>
+</html>
