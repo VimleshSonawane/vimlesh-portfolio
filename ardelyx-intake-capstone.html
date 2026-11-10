@@ -135,7 +135,7 @@ section{padding:72px 0;border-top:1px solid var(--rule)}
 /* case walk */
 .walk{display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start}
 .cases{display:flex;flex-direction:column;gap:8px}
-.case{appearance:none;font:inherit;color:inherit;cursor:pointer;text-align:left;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px 14px}
+.case{appearance:none;font:inherit;color:inherit;cursor:pointer;text-align:left;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
 .case:hover{border-color:var(--route)}
 .case[aria-pressed="true"]{border-color:var(--route);background:var(--route-soft)}
 .case .cn{font-size:13px;color:var(--muted)}
@@ -646,7 +646,7 @@ footer a{margin-right:18px}
       o:"No second license for the same capability."}
   ];
   const casesEl = document.getElementById('cases');
-  casesEl.innerHTML = CASES.map((c,i)=>`<button class="case" data-c="${i}" aria-pressed="false"><span class="cn">Case ${c.n}</span><span class="ct">${c.t}</span></button>`).join('');
+  casesEl.innerHTML = CASES.map((c,i)=>`<button class="case" data-c="${i}" aria-pressed="false"><span class="cn">Case ${c.n}</span> <span class="ct">${c.t}</span></button>`).join('');
   const steps = document.getElementById('steps'), stamp = document.getElementById('stamp');
   let timers = [], cur = 0;
   function walk(i){
