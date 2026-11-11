@@ -1849,7 +1849,7 @@ addEventListener("scroll",()=>requestAnimationFrame(onS),{passive:true});onS();
  if (tools) {
    var search = document.getElementById("proj-search"), clearBtn = document.getElementById("proj-clear");
    var roleBtns = Array.prototype.slice.call(tools.querySelectorAll(".role-btn"));
-   var role = "All", q = "";
+   var role = "All", q = "", noteBase = "", noteMine = null;
    var ROLEMAP = {
      "Project Management": ["Agile & PMO", "Business analysis", "Construction"],
      "Operations / Process Improvement": ["Quality", "Agile & PMO", "Business analysis"],
@@ -1889,8 +1889,12 @@ addEventListener("scroll",()=>requestAnimationFrame(onS),{passive:true});onS();
        });
      }
      var note = document.getElementById("pfnote");
-     if (note && active) {
-       note.textContent = visible ? ("Showing " + visible + " project" + (visible === 1 ? "" : "s") + (role !== "All" ? " for " + role : "") + (q ? " matching \u201c" + q + "\u201d" : "") + ".") : "No projects match that search or role. Clear the filters to see all projects.";
+     if (note) {
+       /* Remember the discipline tabs' own message, so it can come back when the filters are cleared. */
+       if (note.textContent !== noteMine) noteBase = note.textContent;
+       var msg = !active ? noteBase : visible ? ("Showing " + visible + " project" + (visible === 1 ? "" : "s") + (role !== "All" ? " for " + role : "") + (q ? " matching \u201c" + q + "\u201d" : "") + ".") : "No projects match that search or role. Clear the filters to see all projects.";
+       if (note.textContent !== msg) note.textContent = msg;
+       noteMine = msg;
      }
    }
    function setRole(r){
