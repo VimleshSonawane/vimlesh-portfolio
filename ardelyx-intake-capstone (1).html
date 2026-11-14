@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Project Intake Operating Model · Ardelyx capstone · Vimlesh Sonawane</title>
+<meta name="description" content="Northeastern PJM6980 capstone: designing the front door to Ardelyx’s PMO, so every new technology request is captured, sized, owned and decided before money, vendors or engineers are committed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500;62..125,700;62..125,800;62..125,900&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --iv:#FBF8F4;--iv2:#F4EEE8;--paper:#FFFFFF;--ink:#221418;--ink2:#4A3439;--muted:#7D6A6E;--line:#E5D9D5;--line2:#EFE6E2;
+  --b9:#4A0F23;--b8:#641630;--b7:#7A1F3D;--b6:#93304F;--b5:#AE4F6C;--b4:#C77D93;--b3:#DDAEBB;--b2:#EFD6DD;--b1:#F8EBEF;
+  --h:"Archivo","Helvetica Neue",Arial,sans-serif;--b:"Source Sans 3","Helvetica Neue",Arial,sans-serif;--m:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 20px)}
+body{margin:0;background:var(--iv);color:var(--ink);font-family:var(--b);font-size:17.5px;line-height:1.58;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--b7)} button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--b6);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+h1,h2,h3,h4{margin:0;font-family:var(--h);font-stretch:88%;letter-spacing:-.02em;font-weight:800;line-height:1.02}
+p{margin:0}
+.wrap{max-width:1160px;margin:0 auto;padding:0 30px}
+.lbl{font-family:var(--m);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--b7);font-weight:500}
+.small{font-size:14.5px;color:var(--muted)}
+.mine{display:inline-flex;align-items:center;gap:6px;font-family:var(--m);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--b7);padding:3px 8px}
+.mine::before{content:"★"}
+/* framed boxes with corner brackets (no soft cards) */
+.fr{position:relative;background:var(--paper);border:1px solid var(--line);padding:24px}
+.fr::before,.fr::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--b7);border-style:solid;pointer-events:none}
+.fr::before{left:-1px;top:-1px;border-width:2px 0 0 2px}
+.fr::after{right:-1px;bottom:-1px;border-width:0 2px 2px 0}
+.fr.dk{background:var(--b8);border-color:var(--b8);color:#fff}
+.fr.dk::before,.fr.dk::after{border-color:var(--b3)}
+.fr.tint{background:var(--b1);border-color:var(--b2)}
+/* top identity strip */
+.idstrip{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px 30px;font-family:var(--m);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.idstrip a{text-decoration:none;color:var(--ink)}
+.idstrip span{color:var(--muted)}
+/* bottom lifecycle stepper nav */
+.life{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(120%);z-index:30;display:flex;align-items:stretch;background:var(--paper);border:1px solid var(--line);box-shadow:0 14px 34px -14px rgba(74,15,35,.45);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.life.show{transform:translateX(-50%)}
+.life a{position:relative;display:flex;flex-direction:column;justify-content:center;padding:8px 16px 9px;text-decoration:none;color:var(--muted);border-right:1px solid var(--line2);min-width:118px;transition:background .25s,color .25s}
+.life a:last-child{border-right:0}
+.life a small{font-family:var(--m);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase}
+.life a b{font-family:var(--h);font-stretch:90%;font-size:14px;font-weight:700}
+.life a::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:var(--p,0%);background:var(--b7);transition:width .2s}
+.life a.on{background:var(--b1);color:var(--b8)}
+@media (max-width:900px){.life{left:8px;right:8px;transform:translateY(120%);overflow-x:auto}.life.show{transform:none}.life a{min-width:96px;padding:7px 10px}}
+/* sections */
+section{padding:110px 0 60px;position:relative}
+.sx{display:grid;grid-template-columns:200px 1fr;gap:34px;margin-bottom:34px}
+.sx .side{border-top:3px solid var(--b7);padding-top:12px}
+.sx .side .ph{font-family:var(--m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.sx .side .n{display:block;font-family:var(--h);font-weight:900;font-stretch:75%;font-size:64px;line-height:.9;color:var(--b7);margin-top:6px}
+.sx h2{font-size:clamp(34px,4.4vw,58px);max-width:20ch}
+.sx p{font-size:19px;color:var(--ink2);max-width:62ch;margin-top:14px}
+.band{background:var(--iv2)}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.in .rv{opacity:1;transform:none}
+html:not(.js) .rv{opacity:1;transform:none}
+.in .rv:nth-child(2){transition-delay:.07s}.in .rv:nth-child(3){transition-delay:.14s}.in .rv:nth-child(4){transition-delay:.21s}.in .rv:nth-child(5){transition-delay:.28s}.in .rv:nth-child(6){transition-delay:.35s}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--h);font-stretch:92%;font-weight:700;font-size:15px;text-decoration:none;padding:12px 18px;border:1.5px solid var(--b7);color:var(--b7);background:var(--paper);transition:background .2s,color .2s}
+.btn:hover{background:var(--b7);color:#fff}
+.btn.p{background:var(--b7);color:#fff}.btn.p:hover{background:var(--b9)}
+
+/* HERO */
+.hero{min-height:100svh;padding:110px 0 70px;display:flex;align-items:center;background:linear-gradient(180deg,var(--iv),var(--iv2))}
+.hero .grid{display:grid;grid-template-columns:1fr 1.05fr;gap:50px;align-items:center}
+.hero h1{font-size:clamp(44px,6vw,86px);font-stretch:82%;font-weight:900;line-height:.92;margin:16px 0 22px}
+.hero h1 span{color:var(--b7)}
+.hero .lede{font-size:19.5px;color:var(--ink2);max-width:52ch}
+.role{margin-top:22px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:16px 18px;border-left:4px solid var(--b7);background:var(--paper)}
+.role b{font-family:var(--h);font-stretch:90%}
+.role p{font-size:15.5px;color:var(--ink2)}
+.facts{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:46px}
+.facts div{padding:16px 14px;border-right:1px solid var(--line)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-family:var(--h);font-weight:900;font-stretch:78%;font-size:clamp(30px,3.4vw,46px);line-height:1;color:var(--b8);font-variant-numeric:tabular-nums}
+.facts span{font-size:13.5px;color:var(--muted)}
+/* front door scene */
+.door{position:relative;perspective:1100px}
+.door svg{display:block;width:100%;height:auto;overflow:visible}
+.dleaf{transform-origin:418px 0;transform-box:view-box;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.door.open .dleaf{transform:perspective(900px) rotateY(-58deg)}
+.req{opacity:0}
+.doorcap{display:flex;justify-content:space-between;font-family:var(--m);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+</style>
+<style>
+/* PROBLEM */
+.pbg{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.chain{display:grid;gap:10px;margin-top:14px}
+.chain div{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);background:var(--paper);opacity:.25;transform:translateX(-12px);transition:opacity .5s,transform .5s}
+.chain.go div{opacity:1;transform:none}
+.chain div i{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-style:normal;font-family:var(--m);font-size:12px;font-weight:600;border:1.5px solid var(--b4);color:var(--b6)}
+.chain.bad div:last-child{border-color:var(--b6);background:var(--b1)}
+.chain.good div i{background:var(--b7);border-color:var(--b7);color:#fff}
+.chain.good div:last-child{background:var(--b8);color:#fff;border-color:var(--b8)}
+.chain.good div:last-child i{background:#fff;color:var(--b8)}
+.rootc{margin-top:20px;font-size:18px}
+.rootc b{color:var(--b8)}
+/* ROLE */
+.rot{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);background:var(--paper)}
+.rot div{padding:18px;border-right:1px solid var(--line);position:relative}
+.rot div:last-child{border-right:0}
+.rot .v{font-family:var(--h);font-weight:900;font-stretch:78%;font-size:36px;color:var(--b3);line-height:1}
+.rot p{font-size:14.5px;color:var(--ink2);margin-top:6px}
+.rot .me{background:var(--b8);color:#fff}
+.rot .me .v{color:#fff}.rot .me p{color:var(--b2)}
+.rot .me::after{content:"my turn as lead";position:absolute;top:-12px;left:18px;font-family:var(--m);font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:var(--b6);color:#fff;padding:2px 7px}
+.did{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.did h3{font-size:21px;margin:8px 0 8px}
+.did p{font-size:15.5px;color:var(--ink2)}
+.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.skills span{font-family:var(--m);font-size:11.5px;padding:6px 10px;border:1px solid var(--b3);color:var(--b8);background:var(--paper)}
+/* MODEL: 9-step path */
+.path{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;perspective:1200px}
+.st{border:1px solid var(--line);background:var(--paper);padding:12px 10px 14px;cursor:pointer;text-align:left;position:relative;transition:transform .35s cubic-bezier(.2,.8,.2,1),background .25s,border-color .25s,box-shadow .25s;min-height:120px;display:flex;flex-direction:column;gap:6px}
+.st .c{font-family:var(--h);font-weight:900;font-stretch:78%;font-size:26px;color:var(--b4);line-height:1}
+.st b{font-family:var(--h);font-stretch:90%;font-size:14px;line-height:1.15}
+.st .grp{font-family:var(--m);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:auto}
+.st.my{border-top:4px solid var(--b7)}
+.st[aria-pressed="true"]{background:var(--b8);border-color:var(--b8);color:#fff;transform:translateY(-10px) rotateX(8deg);box-shadow:0 24px 30px -18px rgba(74,15,35,.7)}
+.st[aria-pressed="true"] .c{color:var(--b3)}.st[aria-pressed="true"] .grp{color:var(--b3)}
+.st.hit{background:var(--b1);border-color:var(--b5)}
+.pgrp{display:grid;grid-template-columns:6fr 3fr;gap:6px;margin-top:6px;font-family:var(--m);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--b7)}
+.pgrp span{border-top:2px solid var(--b7);padding-top:6px}
+.sd{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:22px;margin-top:22px}
+.sd h3{font-size:26px;margin-top:6px}
+.sd ul{margin:8px 0 0;padding-left:18px;font-size:15.5px}
+.sd li{margin:4px 0}
+.sd .k{font-family:var(--m);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sd p{font-size:15.5px}
+/* PLAN */
+.plan{display:grid;grid-template-columns:1.25fr 1fr;gap:20px}
+.wbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.wbs .wp{border:1px solid var(--line);background:var(--paper)}
+.wbs .wp h4{font-size:14.5px;padding:10px 12px;background:var(--b1);border-bottom:1px solid var(--line);font-stretch:90%}
+.wbs .wp h4 span{font-family:var(--m);font-size:11px;color:var(--b7);margin-right:6px}
+.wbs ul{list-style:none;margin:0;padding:8px 12px 10px;font-size:13.5px}
+.wbs li{padding:3px 0;border-bottom:1px dashed var(--line2)}
+.wbs li:last-child{border-bottom:0}
+.wbs li.m{font-weight:700;color:var(--b8)}
+.wbs li.m::after{content:" ★";color:var(--b6)}
+.gantt{margin-top:14px}
+.gr{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;margin:7px 0;font-size:13.5px}
+.gt{position:relative;height:20px;background:repeating-linear-gradient(90deg,transparent 0 calc(25% - 1px),var(--line2) calc(25% - 1px) 25%)}
+.gb{position:absolute;top:3px;bottom:3px;background:var(--b6);transform-origin:left;transform:scaleX(0);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.gb.pm{background:repeating-linear-gradient(135deg,var(--b3) 0 6px,var(--b2) 6px 12px)}
+.in .gb{transform:none}
+.gm{position:absolute;top:50%;width:12px;height:12px;transform:translate(-50%,-50%) rotate(45deg);background:var(--b8);border:2px solid #fff;box-shadow:0 0 0 1px var(--b8)}
+.gmon{display:grid;grid-template-columns:150px 1fr;gap:10px;font-family:var(--m);font-size:10.5px;color:var(--muted)}
+.gmon div{display:flex;justify-content:space-between}
+.cost{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center}
+.cost svg{width:100%;height:auto}
+.donut{transition:stroke-dasharray 1.4s cubic-bezier(.2,.8,.2,1)}
+.cost dl{margin:0;display:grid;gap:8px}
+.cost dl div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line2);padding-bottom:6px;font-size:15px}
+.cost dd{margin:0;font-family:var(--m);font-weight:600}
+/* DEPENDENCIES hub */
+.dep{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;align-items:center}
+.hub svg{width:100%;height:auto;display:block}
+.hub .node{cursor:pointer}
+.hub .node rect{transition:fill .25s,stroke .25s}
+.hub .node.on rect{fill:var(--b8);stroke:var(--b8)}
+.hub .node.on text{fill:#fff}
+.hub .lnk{stroke:var(--b3);stroke-width:2;stroke-dasharray:6 6;animation:flow 1.2s linear infinite}
+.hub .lnk.on{stroke:var(--b7);stroke-width:3}
+.hub .lnk.held{stroke:var(--b2)}
+@keyframes flow{to{stroke-dashoffset:-24}}
+.xch{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.xch ul{margin:6px 0 0;padding-left:18px;font-size:15px}
+.ist{margin-top:14px;display:flex;gap:6px;align-items:center}
+.ist i{flex:1;height:12px;background:var(--b7)}
+.ist i.h{background:repeating-linear-gradient(135deg,var(--b2) 0 5px,#fff 5px 10px);border:1px dashed var(--b5)}
+/* GOVERNANCE */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tgl{display:inline-flex;border:1.5px solid var(--b7);margin:12px 0}
+.tgl button{border:0;background:none;padding:9px 16px;font-family:var(--h);font-stretch:90%;font-weight:700;font-size:14px;cursor:pointer;color:var(--b7)}
+.tgl button[aria-pressed="true"]{background:var(--b7);color:#fff}
+.cmp ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.cmp li{padding:10px 12px;border:1px solid var(--line);background:var(--paper);font-size:15px;animation:up .4s ease both}
+.cmp.after li{border-left:4px solid var(--b7)}
+.cmp li:nth-child(2){animation-delay:.05s}.cmp li:nth-child(3){animation-delay:.1s}.cmp li:nth-child(4){animation-delay:.15s}.cmp li:nth-child(5){animation-delay:.2s}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.later{margin-top:12px;font-size:14.5px;color:var(--ink2)}
+.later b{color:var(--b8)}
+.risks{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+.rk{padding:14px;border:1px solid var(--line);background:var(--paper);transition:transform .3s,box-shadow .3s}
+@media (hover:hover){.rk:hover{transform:translateY(-4px);box-shadow:0 16px 24px -16px rgba(74,15,35,.5)}}
+.rk b{display:block;font-family:var(--h);font-stretch:90%;font-size:15.5px}
+.rk p{font-size:13.5px;color:var(--muted);margin-top:4px}
+.rk .r{font-size:13.5px;color:var(--b8);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.sh3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.sh3 h4{font-size:15px;font-stretch:90%;color:var(--b7);text-transform:uppercase;letter-spacing:.04em}
+.sh3 ul{margin:8px 0 0;padding-left:18px;font-size:14.5px}
+/* STATUS */
+.ms{position:relative;margin-top:10px;padding:34px 0 10px}
+.mline{position:absolute;left:0;right:0;top:44px;height:3px;background:var(--line)}
+.mfill{position:absolute;left:0;top:44px;height:3px;background:var(--b7);width:0;transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
+.mdots{position:relative;height:30px}
+.md{position:absolute;top:0;width:20px;height:20px;transform:translateX(-50%) rotate(45deg);border:2px solid var(--b7);background:var(--iv);cursor:pointer;transition:transform .2s}
+.md.done{background:var(--b7)}.md.check{background:linear-gradient(135deg,var(--b7) 50%,var(--iv) 50%)}
+.md:hover,.md[aria-pressed="true"]{transform:translateX(-50%) rotate(45deg) scale(1.25)}
+.mmon{position:relative;height:18px;font-family:var(--m);font-size:10.5px;color:var(--muted)}
+.mmon span{position:absolute;transform:translateX(-50%)}
+.mdet{margin-top:10px;display:flex;gap:16px;align-items:center;min-height:52px}
+.mdet b{font-family:var(--h);font-stretch:85%;font-size:22px}
+.mleg{display:flex;gap:16px;font-family:var(--m);font-size:11px;color:var(--muted);margin-top:8px;flex-wrap:wrap}
+.mleg i{display:inline-block;width:11px;height:11px;transform:rotate(45deg);border:2px solid var(--b7);margin-right:6px;vertical-align:-1px}
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.cs{border:1px solid var(--line);background:var(--paper);padding:14px;cursor:pointer;text-align:left;transition:all .25s}
+.cs small{font-family:var(--m);font-size:10.5px;color:var(--b7)}
+.cs b{display:block;font-family:var(--h);font-stretch:88%;font-size:18px;margin:4px 0 6px}
+.cs p{font-size:13.5px;color:var(--ink2)}
+.cs .hits{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+.cs .hits span{font-family:var(--m);font-size:10.5px;padding:2px 6px;background:var(--b1);color:var(--b8)}
+.cs[aria-pressed="true"]{background:var(--b8);color:#fff;border-color:var(--b8)}
+.cs[aria-pressed="true"] p,.cs[aria-pressed="true"] small{color:var(--b2)}
+.cs[aria-pressed="true"] .hits span{background:rgba(255,255,255,.15);color:#fff}
+.left{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.left div{padding:12px 14px;border-left:3px solid var(--b4);background:var(--paper);font-size:14.5px}
+.end{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+footer{padding:30px 0 110px;font-family:var(--m);font-size:11px;color:var(--muted)}
+
+@media (max-width:980px){
+  .wrap{padding:0 18px}section{padding:84px 0 40px}
+  .hero .grid,.pbg,.plan,.dep,.cg,.cost{grid-template-columns:1fr}
+  .sx{grid-template-columns:1fr;gap:14px}
+  .facts{grid-template-columns:repeat(3,1fr)}.facts div:nth-child(3){border-right:0}.facts div:nth-child(-n+3){border-bottom:1px solid var(--line)}
+  .rot,.did,.sd,.wbs,.xch,.sh3,.cases,.left{grid-template-columns:1fr}.rot div{border-right:0;border-bottom:1px solid var(--line)}
+  .path{grid-template-columns:repeat(3,1fr)}.pgrp{display:none}
+  .risks{grid-template-columns:1fr 1fr}
+  .gr,.gmon{grid-template-columns:96px 1fr}
+  .cost{grid-template-columns:150px 1fr}
+}
+main{padding-bottom:40px}
+.hero .door{margin-right:-20px}
+.fr,.plan>*,.dep>*,.cg>*,.pbg>*{min-width:0}
+@media (max-width:980px){.hero .door{margin-right:0}.fr{padding:18px}.cost dl div{font-size:14px}}
+</style>
+</head>
+<body>
+<nav class="life" id="life" aria-label="Project lifecycle"></nav>
+<main>
+<!-- HERO -->
+<section class="hero" id="overview" data-g="Overview" data-ph="Start">
+  <div class="idstrip"><a href="https://vimleshsonawane.com">← Vimlesh Sonawane</a><span>Northeastern University · PJM6980 capstone</span></div>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <span class="lbl rv">Capstone · Ardelyx IT transformation · in progress</span>
+        <h1 class="rv">Designing the <span>front door</span> to Ardelyx’s IT</h1>
+        <p class="lede rv">At Ardelyx, a growing biopharma, departments bought and started technology projects on their own, and IT often found out last. Our four-person team is designing an intake operating model: one front door where every new technology request is captured, sized, owned and decided before money, vendors or engineers are committed.</p>
+        <div class="role rv"><span class="mine">My part</span><p><b>The team rotated the lead role; I led the third version of our Integrated Project Plan (IPP v3.0)</b> and the Interface &amp; Dependency Agreement across four partner workstreams, and owned the design inputs for deliverables D5, D6 and D9.</p></div>
+      </div>
+      <div class="door rv" id="door">
+        <svg viewBox="0 0 620 400" role="img" aria-label="Requests from different departments all enter one intake door, get an ID, tier and owner, go to an IT review, then on to delivery">
+          <defs><linearGradient id="dg" x1="0" x2="1"><stop offset="0" stop-color="#93304F"/><stop offset="1" stop-color="#4A0F23"/></linearGradient></defs>
+          <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#4A3439">
+            <g id="srcs">
+              <rect x="6" y="40" width="132" height="40" fill="#fff" stroke="#E5D9D5"/><text x="18" y="65">Commercial Ops</text>
+              <rect x="6" y="120" width="132" height="40" fill="#fff" stroke="#E5D9D5"/><text x="18" y="145">Business requester</text>
+              <rect x="6" y="200" width="132" height="40" fill="#fff" stroke="#E5D9D5"/><text x="18" y="225">IT business partner</text>
+              <rect x="6" y="280" width="132" height="40" fill="#fff" stroke="#E5D9D5"/><text x="18" y="305">Department idea</text>
+            </g>
+            <g fill="none" stroke="#DDAEBB" stroke-width="2" stroke-dasharray="4 6">
+              <path id="p0" d="M138 60 C 220 60, 230 190, 300 200"/><path id="p1" d="M138 140 C 210 140, 240 196, 300 200"/>
+              <path id="p2" d="M138 220 C 210 220, 240 204, 300 200"/><path id="p3" d="M138 300 C 220 300, 230 210, 300 200"/>
+              <path id="po" d="M392 200 L 470 200 L 470 120 L 540 120"/>
+            </g>
+            <rect x="300" y="110" width="92" height="180" fill="#F8EBEF" stroke="#7A1F3D" stroke-width="2"/>
+            <rect class="dleaf" x="302" y="112" width="88" height="176" fill="url(#dg)"/>
+            <text x="346" y="100" text-anchor="middle" font-weight="600" fill="#7A1F3D">ONE FRONT DOOR</text>
+            <text x="346" y="312" text-anchor="middle" fill="#7D6A6E">intake form · D1</text>
+            <g><rect x="410" y="232" width="120" height="66" fill="#fff" stroke="#E5D9D5"/><text x="420" y="252">request ID</text><text x="420" y="268">tier &amp; checks</text><text x="420" y="284">sponsor &amp; owner</text></g>
+            <rect x="540" y="98" width="74" height="44" fill="#641630"/><text x="577" y="117" text-anchor="middle" fill="#fff">IT review</text><text x="577" y="132" text-anchor="middle" fill="#F8EBEF">decides</text>
+            <rect x="540" y="168" width="74" height="44" fill="#fff" stroke="#7A1F3D"/><text x="577" y="187" text-anchor="middle" fill="#7A1F3D">routed to</text><text x="577" y="202" text-anchor="middle" fill="#7A1F3D">delivery</text>
+            <path d="M577 142 L577 166" stroke="#7A1F3D" stroke-width="2" marker-end=""/>
+          </g>
+          <g id="tok"></g>
+        </svg>
+        <div class="doorcap"><span>Before: many ways in</span><span>After: one path, one decision</span></div>
+      </div>
+    </div>
+    <div class="facts rv">
+      <div><b data-c="9">9</b><span>deliverables in the model</span></div>
+      <div><b data-c="6">6</b><span>workstreams connected</span></div>
+      <div><b data-c="13">13</b><span>milestones tracked</span></div>
+      <div><b data-c="33">33</b><span>must-have requirements</span></div>
+      <div><b>$48K</b><span>planned budget ($48,150)</span></div>
+      <div><b data-c="458">458</b><span>planned labour hours</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem" data-g="Problem" data-ph="Initiation">
+  <div class="wrap">
+    <div class="sx"><div class="side rv"><span class="ph">Initiation</span><span class="n">01</span></div><div><h2 class="rv">The problem: IT was the last to know</h2><p class="rv">With no single entry point, a request moved ahead on the business side, a vendor was picked and commitments were made before IT was involved. IT then inherited the consequences and schedules slipped.</p></div></div>
+    <div class="pbg">
+      <div class="fr rv"><span class="lbl">Before · no common entry point</span><div class="chain bad" id="cb"><div><i>1</i>Department has an idea</div><div><i>2</i>Vendor is picked</div><div><i>3</i>Money and commitments are made</div><div><i>4</i>IT finds out</div><div><i>5</i>Schedules slip</div></div></div>
+      <div class="fr rv"><span class="lbl">After · our intake model</span><div class="chain good" id="cg"><div><i>1</i>Request logged with an ID</div><div><i>2</i>Tiered and checked</div><div><i>3</i>Sponsor and funding named</div><div><i>4</i>IT review decides</div><div><i>5</i>Routed to delivery</div></div></div>
+    </div>
+    <p class="rootc rv"><b>Root cause:</b> requests had no ID, no tier, no named owner, and no point where IT could weigh in before commitments. The sponsor asked for a more mature IT operating model, without the bureaucracy of a much bigger company.</p>
+  </div>
+</section>
+
+<!-- ROLE -->
+<section id="role" class="band" data-g="My role" data-ph="Initiation">
+  <div class="wrap">
+    <div class="sx"><div class="side rv"><span class="ph">Team</span><span class="n">02</span></div><div><h2 class="rv">My role: a rotating lead, and my turn</h2><p class="rv">Each of the four team members took a turn leading a version of the Integrated Project Plan. Mine was version 3.0.</p></div></div>
+    <div class="rot rv">
+      <div><span class="v">v1.0</span><p>Research, scope analysis, charter, schedule</p></div>
+      <div><span class="v">v2.0</span><p>Executive summary, scope, WBS, cost and communication plans</p></div>
+      <div class="me"><span class="v">v3.0</span><p>Interface &amp; Dependency Agreement, IPP sections 2.1 and 5.0</p></div>
+      <div><span class="v">v4.0</span><p>Sponsor milestone, schedule and cost, form redesign</p></div>
+    </div>
+    <div class="did">
+      <div class="fr rv"><span class="mine">Led</span><h3>Interface &amp; Dependency Agreement</h3><p>In weeks 5–6, mapped needs, handoffs and exclusions with four partner teams, then updated the scope and communication plan to match.</p></div>
+      <div class="fr rv"><span class="mine">Owned</span><h3>Design inputs for D5, D6, D9</h3><p>D5 benefit sections and owner fields · D6 urgent-request exception rule · D9 vendor-plan questions that define “done” before work starts.</p></div>
+      <div class="fr rv"><span class="mine">Kept aligned</span><h3>D6 ↔ D7 and cross-team rules</h3><p>With a teammate, kept priority triggers and review rules consistent each week; aligned tiering, resource data, owner data and escalation across teams.</p></div>
+    </div>
+    <div class="skills rv"><span>Stakeholder management</span><span>Dependency mapping</span><span>Integrated project planning</span><span>Requirements (MoSCoW)</span><span>Governance design</span><span>Risk management</span><span>Change control</span></div>
+  </div>
+</section>
+
+<!-- PLAN -->
+<section id="plan" data-g="Plan" data-ph="Planning">
+  <div class="wrap">
+    <div class="sx"><div class="side rv"><span class="ph">Planning</span><span class="n">03</span></div><div><h2 class="rv">The plan: WBS, schedule and budget</h2><p class="rv">We ran the capstone itself as a project: six work packages over 14 Sep – 16 Dec 2026, with one Integrated Project Plan covering every knowledge area.</p></div></div>
+    <div class="plan">
+      <div class="fr rv"><span class="lbl">Work breakdown structure · ★ includes my work</span><div class="wbs" id="wbs"></div></div>
+      <div>
+        <div class="fr rv"><span class="lbl">Schedule · Sep 14 – Dec 16</span><div class="gantt" id="gantt"></div></div>
+        <div class="fr rv" style="margin-top:20px"><span class="lbl">Cost · $48,150 planned</span>
+          <div class="cost"><svg viewBox="0 0 120 120" aria-label="Budget: 95% labour, 5% direct spending"><circle cx="60" cy="60" r="46" fill="none" stroke="#EFD6DD" stroke-width="16"/><circle class="donut" id="dn1" cx="60" cy="60" r="46" fill="none" stroke="#7A1F3D" stroke-width="16" stroke-dasharray="0 289" transform="rotate(-90 60 60)"/><circle class="donut" id="dn2" cx="60" cy="60" r="46" fill="none" stroke="#DDAEBB" stroke-width="16" stroke-dasharray="0 289" transform="rotate(-90 60 60)"/><text x="60" y="58" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-size="20" fill="#4A0F23">95%</text><text x="60" y="74" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" fill="#7D6A6E">people time</text></svg>
+          <dl><div><dt>Team &amp; stakeholder labour</dt><dd>$45,800</dd></div><div><dt>Direct spending</dt><dd>$2,350</dd></div><div><dt>New software · consultants</dt><dd>$0 · $0</dd></div><div><dt>Planning rate</dt><dd>$100/h · 458 h</dd></div></dl></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPENDENCIES -->
+<section id="deps" class="band" data-g="Dependencies" data-ph="Planning">
+  <div class="wrap">
+    <div class="sx"><div class="side rv"><span class="ph">Planning</span><span class="n">04</span></div><div><h2 class="rv">Intake feeds five other workstreams</h2><p class="rv">The PMO programme had six workstreams; ours comes first, because everything else builds on what intake captures. Select a workstream to see what we exchange.</p></div></div>
+    <div class="dep">
+      <div class="fr hub rv"><svg viewBox="0 0 520 380" id="hub" role="img" aria-label="Intake and Initiation at the centre, linked to Delivery Playbook, Portfolio Reporting, Value Realization, PMO Adoption and Transition and Closure"></svg></div>
+      <div class="fr rv" id="xc" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODEL -->
+<section id="model" class="band" data-g="The model" data-ph="Execution">
+  <div class="wrap">
+    <div class="sx"><div class="side rv"><span class="ph">Execution</span><span class="n">05</span></div><div><h2 class="rv">The model: nine deliverables, one path</h2><p class="rv">Every request passes through the same nine steps. Select a step to see what it does, which real case it answers and which team it depends on. ★ marks my design inputs.</p></div></div>
+    <div class="rv"><div class="path" id="path"></div><div class="pgrp"><span>Intake front end · D1–D6</span><span>Review &amp; routing · D7–D9</span></div></div>
+    <div class="fr sd rv" id="sd" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- GOVERNANCE -->
+<section id="gov" data-g="Governance" data-ph="Monitoring">
+  <div class="wrap">
+    <div class="sx"><div class="side rv"><span class="ph">Monitoring &amp; control</span><span class="n">06</span></div><div><h2 class="rv">Change control: the sponsor changed the brief</h2><p class="rv">On 1 October the sponsor asked for more than visibility: a real decision step. Toggle to compare the design before and after.</p></div></div>
+    <div class="cg">
+      <div class="fr rv"><div class="tgl" role="group" aria-label="Before or after"><button data-v="b" aria-pressed="false">Before 1 Oct</button><button data-v="a" aria-pressed="true">After 1 Oct</button></div><div class="cmp" id="cmp"></div>
+        <p class="later"><b>Late Oct:</b> sponsor confirmed one intake form with conditional fields, not several forms. <b>Nov:</b> IPP updated with escalation windows and a one-time tier and ID for in-flight projects.</p></div>
+      <div class="fr rv"><span class="lbl">Who decides, advises and uses it</span><div class="sh3" style="margin-top:12px;grid-template-columns:1fr">
+        <div><h4>Decide</h4><ul><li>Project sponsor: design direction, decisions, acceptance</li><li>CIO: enterprise IT visibility, escalation</li></ul></div>
+        <div><h4>Advise</h4><ul><li>Business Technology · Infrastructure &amp; Security · IT Compliance &amp; SOX</li></ul></div>
+        <div><h4>Use</h4><ul><li>Commercial Operations · IT business partners &amp; PMs · business requesters · partner workstreams</li></ul></div></div></div>
+    </div>
+    <span class="lbl rv" style="display:block;margin-top:30px">Risks and planned responses</span>
+    <div class="risks" id="risks"></div>
+  </div>
+</section>
+
+<!-- STATUS -->
+<section id="status" class="band" data-g="Status" data-ph="Closing">
+  <div class="wrap">
+    <div class="sx"><div class="side rv"><span class="ph">Closing</span><span class="n">07</span></div><div><h2 class="rv">Where it stands, and how it will be validated</h2><p class="rv">13 milestones: 4 done, 2 being confirmed, 7 upcoming. Sponsor acceptance is planned for 11 December and closeout for 16 December.</p></div></div>
+    <div class="fr rv"><div class="ms" id="ms"><div class="mline"></div><div class="mfill" id="mfill"></div><div class="mdots" id="mdots"></div><div class="mmon" id="mmon"></div></div>
+      <div class="mdet" id="mdet" aria-live="polite"></div>
+      <div class="mleg"><span><i style="background:var(--b7)"></i>done</span><span><i style="background:linear-gradient(135deg,var(--b7) 50%,var(--iv) 50%)"></i>being confirmed</span><span><i></i>upcoming</span></div></div>
+    <span class="lbl rv" style="display:block;margin-top:34px">Six real failure scenarios the model must handle · select one</span>
+    <div class="cases" id="cases"></div>
+    <p class="small rv" style="margin-top:12px">The six-case walkthrough is planned for 25 November. Selecting a case highlights the deliverables designed to handle it in section 05.</p>
+    <span class="lbl rv" style="display:block;margin-top:30px">What’s left before 11 December</span>
+    <div class="left"><div class="rv">Confirm D5 sponsorship and benefit capture</div><div class="rv">Finalise D6 priority triggers and D7 review</div><div class="rv">Complete D8 routing and D9 deliverable definition</div><div class="rv">Confirm sponsor decisions and targets</div><div class="rv">Walk the six cases through the model</div><div class="rv">Final package, sponsor acceptance, handoff</div></div>
+    <div class="end rv"><a class="btn p" href="https://vimleshsonawane.com">← Back to portfolio</a><a class="btn" href="approval-workflow-improvement.html">Approval Workflow project</a><a class="btn" href="agile-saas-onboarding-rollout.html">Agile SaaS project</a></div>
+  </div>
+</section>
+</main>
+<footer class="wrap">Northeastern University · PJM6980 capstone · Team Project Intake · Vimlesh Sonawane</footer>
+<script>
+(function(){
+document.documentElement.classList.add('js');
+try{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- hero front door: tokens through one door ---------- */
+(function(){ const door=$('#door'), g=$('#tok'); const P=[0,1,2,3].map(i=>$('#p'+i)), PO=$('#po'); let alive=false, t0=0;
+  const toks=Array.from({length:8},(_,k)=>({src:k%4, off:k*0.12}));
+  g.innerHTML=toks.map(()=>`<g class="tk"><circle r="8" fill="#AE4F6C"/><circle r="3" fill="#fff"/></g>`).join('');
+  const els=[...g.children];
+  function frame(t){ if(!alive) return; const T=((t-t0)/4200);
+    toks.forEach((k,i)=>{ let p=(T+k.off)%1; const el=els[i]; let pt, fill;
+      if(p<.55){ const L=P[k.src].getTotalLength(); pt=P[k.src].getPointAtLength(L*(p/.55)); fill='#AE4F6C'; }
+      else if(p<.62){ pt={x:300+92*((p-.55)/.07),y:200}; fill='#7A1F3D'; }
+      else { const L=PO.getTotalLength(); pt=PO.getPointAtLength(L*Math.min(1,(p-.62)/.32)); fill='#4A0F23'; }
+      el.setAttribute('transform',`translate(${pt.x},${pt.y})`); el.firstChild.setAttribute('fill',fill); el.style.opacity=p>.96?0:1; });
+    requestAnimationFrame(frame); }
+  const o=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ door.classList.add('open'); if(!reduce&&!alive){ alive=true; t0=performance.now(); requestAnimationFrame(frame);} } else alive=false; }),{threshold:.2}); o.observe(door);
+})();
+
+/* ---------- 9-step model ---------- */
+const D=[
+ {c:"D1",n:"Intake form",f:["About 5–10 minutes to complete","Conditional fields by size, risk and complexity","One request ID shared across all PMO workstreams","Triggers the capability check"],cases:"Every request",dep:"Portfolio Reporting (IDs)"},
+ {c:"D2",n:"Intake criteria",f:["Separates routine IT requests from project work","Common tiering model","Uses the Delivery Playbook sizing rubric"],cases:"Case 1",dep:"Delivery Playbook"},
+ {c:"D3",n:"Capability check",f:["Is there already a tool that does this?","Runs before any new vendor build or purchase","Avoids duplicate systems and spend"],cases:"Cases 2, 10",dep:"—"},
+ {c:"D4",n:"Resource visibility",f:["Which departments need shared IT specialists","Captures that demand up front","Makes competing requests visible"],cases:"Cases 1, 4, 5",dep:"Portfolio Reporting"},
+ {c:"D5",n:"Sponsor & benefits",f:["Executive sponsor, accountable owner + backup","Funding and expected business benefits","Operational owner and ongoing costs"],cases:"Every request",dep:"Value Realization, PMO Adoption",mine:"Benefit sections and owner fields"},
+ {c:"D6",n:"Priority triggers",f:["Priority categories","Urgency sets the decision timeline","Urgent-request exception rule"],cases:"Case 5",dep:"Delivery Playbook",mine:"Urgent-request exception rule"},
+ {c:"D7",n:"Review & decision",f:["Cross-functional IT review group","Regular review cadence","Documented decisions, feedback to requesters"],cases:"Every request",dep:"Aligned with D6 weekly"},
+ {c:"D8",n:"Routing & escalation",f:["Notifies affected resource managers","Flags resource conflicts","Escalates to the PMO’s shared authority"],cases:"Cases 1, 4, 5",dep:"Delivery Playbook (timing)"},
+ {c:"D9",n:"Vendor deliverables",f:["Clarifies the expected output","Defines what “complete” means","Cuts rework and change requests"],cases:"Case 3",dep:"Delivery Playbook",mine:"Vendor-plan mapping questions"}];
+$('#path').innerHTML=D.map((d,i)=>`<button class="st${d.mine?' my':''}" data-i="${i}" aria-pressed="false"><span class="c">${d.c}</span><b>${d.n}</b><span class="grp">${d.mine?'★ my input':i<6?'front end':'review'}</span></button>`).join('');
+function pickD(i){ $$('.st').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.i===i)); const d=D[i];
+  $('#sd').innerHTML=`<div><span class="lbl">${d.c} · ${i<6?'intake front end':'review & routing'}</span><h3>${d.n}</h3>${d.mine?`<p style="margin-top:10px"><span class="mine">My design input</span> ${d.mine}</p>`:''}</div>
+    <div><span class="k">What it does</span><ul>${d.f.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div><span class="k">Answers</span><p>${d.cases}</p><span class="k" style="display:block;margin-top:12px">Depends on</span><p>${d.dep}</p></div>`; }
+$$('.st').forEach(b=>b.addEventListener('click',()=>pickD(+b.dataset.i))); pickD(4);
+
+/* ---------- WBS + gantt ---------- */
+const TREE=[["1","Project management",["Team charter","Integrated Project Plan",["IPP v3.0",1],"Health checks","Retrospectives"]],["2","Discovery & requirements",["Research & scope","33 must-have requirements","Sponsor decisions",["Partner interface agreements",1]]],["3","Front-end design",["D1 Intake form","D2 Criteria","D3 Capability check","D4 Resource log",["D5 Sponsor & benefits",1],["D6 Priority triggers",1]]],["4","Review & routing",["D7 Review & decision","D8 Routing & escalation",["D9 Vendor deliverables",1]]],["5","Validation",["Case walkthroughs (6)","Sponsor confirms targets","Mid-project review"]],["6","Delivery & closeout",["Final model package","Sponsor acceptance","Handoff & closure"]]];
+$('#wbs').innerHTML=TREE.map(t=>`<div class="wp"><h4><span>${t[0]}</span>${t[1]}</h4><ul>${t[2].map(x=>Array.isArray(x)?`<li class="m">${x[0]}</li>`:`<li>${x}</li>`).join('')}</ul></div>`).join('');
+const d0=new Date('2026-09-14'), span=(new Date('2026-12-16')-d0)/864e5, pos=d=>((new Date(d)-d0)/864e5)/span*100;
+const ROWS=[["Project management","2026-09-14","2026-12-16",1],["Discovery & requirements","2026-09-14","2026-10-09"],["Front-end design D1–D6","2026-10-09","2026-11-02"],["Review & routing D7–D9","2026-11-02","2026-11-13"],["Validation","2026-11-13","2026-11-25"],["Delivery & closeout","2026-11-25","2026-12-16"]];
+const KEY=[["2026-10-01",1],["2026-10-27",0],["2026-12-11",5]];
+$('#gantt').innerHTML=`<div class="gmon"><span></span><div><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span></div></div>`+ROWS.map((r,i)=>`<div class="gr"><span>${r[0]}</span><div class="gt"><span class="gb ${r[3]?'pm':''}" style="left:${pos(r[1])}%;width:${pos(r[2])-pos(r[1])}%;transition-delay:${i*.12}s"></span>${KEY.filter(k=>k[1]===i).map(k=>`<span class="gm" style="left:${pos(k[0])}%"></span>`).join('')}</div></div>`).join('')+`<p class="small" style="margin-top:8px">◆ sponsor decisions 1 Oct · partner agreements 27 Oct · acceptance 11 Dec</p>`;
+
+/* ---------- dependency hub ---------- */
+const WS=[{t:"Intake & Initiation",x:260,y:190,hub:1},{t:"Delivery Playbook",x:110,y:60,need:["Sizing rubric","Delivery criteria","Escalation timing","Vendor input"],give:["Intake info","Tier","Handoff into delivery"]},{t:"Portfolio Reporting",x:410,y:60,need:["Inclusion rules","Resource-record fields","Reporting IDs"],give:["Request ID","Tier","Resource demand"]},{t:"Value Realization",x:430,y:300,need:["Benefit template","Benefit guidance"],give:["Sponsor & funding","Expected benefits","Ownership"]},{t:"PMO Adoption",x:90,y:300,need:["People-impact questions","Owner-field rules"],give:["Intake process","Role clarity"]},{t:"Transition & Closure",x:260,y:345,held:1,need:["Handoff requirements","Ownership decisions"],give:["Intake info","Operational owner"]}];
+let hs=`<g font-family="IBM Plex Mono, monospace" font-size="11.5">`;
+WS.slice(1).forEach((w,i)=>{ hs+=`<line class="lnk${w.held?' held':''}" data-i="${i+1}" x1="260" y1="190" x2="${w.x}" y2="${w.y}"/>`; });
+WS.forEach((w,i)=>{ const W=w.hub?170:150; hs+=`<g class="node${w.hub?' on':''}" data-i="${i}" tabindex="${w.hub?-1:0}" role="${w.hub?'img':'button'}" aria-label="${w.t}${w.held?', held by sponsor':''}"><rect x="${w.x-W/2}" y="${w.y-20}" width="${W}" height="40" fill="${w.hub?'#4A0F23':'#fff'}" stroke="${w.held?'#DDAEBB':'#7A1F3D'}" stroke-width="1.5" ${w.held?'stroke-dasharray="5 4"':''}/><text x="${w.x}" y="${w.y+4}" text-anchor="middle" fill="${w.hub?'#fff':'#4A3439'}" font-weight="${w.hub?600:500}">${w.t}</text></g>`; });
+$('#hub').innerHTML=hs+'</g>';
+function pickW(i){ const w=WS[i]; $$('#hub .node').forEach(n=>n.classList.toggle('on',+n.dataset.i===i||n.dataset.i==='0'));
+  $$('#hub .lnk').forEach(l=>l.classList.toggle('on',+l.dataset.i===i));
+  $('#xc').innerHTML=`<span class="lbl">${w.t}${w.held?' · held by sponsor, not yet staffed':''}</span><div class="xch"><div><b>We need from them</b><ul>${w.need.map(x=>`<li>${x}</li>`).join('')}</ul></div><div><b>We give them</b><ul>${w.give.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>
+    <span class="lbl" style="display:block;margin-top:16px">Interface status</span><div class="ist"><i></i><i></i><i></i><i></i><i class="h"></i></div><p class="small" style="margin-top:6px">4 of 5 partner interfaces mapped; Transition &amp; Closure held by the sponsor.</p>`; }
+$$('#hub .node').forEach(n=>{ if(n.dataset.i==='0') return; n.addEventListener('click',()=>pickW(+n.dataset.i)); n.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pickW(+n.dataset.i);} }); });
+pickW(1);
+
+/* ---------- change toggle ---------- */
+const CH={b:["Visibility only","Log work that needs shared IT resources","No formal approval gate","Visibility for IT, but no decision"],a:["Formal but lightweight approval","One intake path for all project-type tech work","Regular cross-functional IT review cadence","Clear, recorded decisions","Feedback back to every requester"]};
+function tg(v){ $$('.tgl button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v)); const c=$('#cmp'); c.className='cmp'+(v==='a'?' after':''); c.innerHTML=`<ul>${CH[v].map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+$$('.tgl button').forEach(b=>b.addEventListener('click',()=>tg(b.dataset.v))); tg('a');
+
+/* ---------- risks ---------- */
+const RISKS=[["Too much bureaucracy","Leadership doesn’t want big-company process","5–10 min form, conditional fields, light review cadence"],["Partner delays","Design needs inputs from 4 other teams","Interface agreements with named owners and dates"],["Scope creep","Every stakeholder wants one more field","Tier-based rigour; fields only when needed"],["Drafts treated as approved","Proposed targets mistaken for decisions","Decision tracking and sponsor confirmation"],["Duplicate purchases","Teams don’t know what’s already licensed","Capability check before any buy (D3)"],["Unclear resource ownership","Business projects consume scarce specialists","Resource visibility and routing (D4, D8)"],["Vendor misunderstanding","Unclear scope causes rework","Deliverable definition before work (D9)"],["Schedule pressure","Partner inputs cluster in November","Named owners, milestones, weekly reviews"]];
+$('#risks').innerHTML=RISKS.map(r=>`<div class="rk rv"><b>${r[0]}</b><p>${r[1]}</p><p class="r">→ ${r[2]}</p></div>`).join('');
+
+/* ---------- milestones ---------- */
+const MS=[["2026-09-18","Charter and sponsor kickoff","done"],["2026-10-01","Sponsor design decisions","done"],["2026-10-09","Scope and requirements baseline","done"],["2026-10-27","Partner interface agreements","done"],["2026-11-02","D1–D6 front-end components","check"],["2026-11-06","Open sponsor interface decisions","check"],["2026-11-13","D7–D9 review and routing","next"],["2026-11-16","Mid-project sponsor review","next"],["2026-11-20","Thresholds and targets confirmed","next"],["2026-11-25","Case validation walkthrough","next"],["2026-12-04","Final operating model package","next"],["2026-12-11","Sponsor acceptance","next"],["2026-12-16","Handoff and closure","next"]];
+const fmt=d=>new Date(d+'T12:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+$('#mdots').innerHTML=MS.map((m,i)=>`<button class="md ${m[2]}" data-i="${i}" style="left:${pos(m[0])}%" aria-label="${fmt(m[0])}: ${m[1]} (${m[2]==='done'?'done':m[2]==='check'?'being confirmed':'upcoming'})"></button>`).join('');
+$('#mmon').innerHTML=[["2026-09-14","14 Sep"],["2026-10-15","Oct"],["2026-11-15","Nov"],["2026-12-16","16 Dec"]].map(m=>`<span style="left:${Math.min(97,Math.max(3,pos(m[0])))}%">${m[1]}</span>`).join('');
+function pickM(i){ const m=MS[i]; $$('.md').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.i===i));
+  $('#mdet').innerHTML=`<span class="lbl">${fmt(m[0])}</span><b>${m[1]}</b><span class="mine" style="background:${m[2]==='done'?'var(--b7)':m[2]==='check'?'var(--b5)':'var(--muted)'}">${m[2]==='done'?'done':m[2]==='check'?'being confirmed':'upcoming'}</span>`.replace('class="mine"','class="mine" ').replace('★',''); }
+$$('.md').forEach(b=>{ b.addEventListener('click',()=>pickM(+b.dataset.i)); b.addEventListener('mouseenter',()=>pickM(+b.dataset.i)); });
+pickM(4);
+
+/* ---------- cases ---------- */
+const CASES=[{n:"Case 1",t:"It’s just a QR card",hits:["D2","D4","D8"],w:"A simple-looking patient engagement idea needed infrastructure work and delayed a scheduled SSO rollout."},{n:"Case 2",t:"Put this in Snowflake",hits:["D3"],w:"A vendor built and billed for a new environment when an existing reporting tool could likely do the job."},{n:"Case 3",t:"Vendor has the plan",hits:["D9"],w:"Ardelyx and the vendor read the training deliverables differently."},{n:"Case 4",t:"My project, your engineers",hits:["D4","D8"],w:"A business-owned project used shared IT staff without portfolio visibility."},{n:"Case 5",t:"Both plans work",hits:["D4","D6","D8"],w:"Two departments needed the same scarce specialists at the same time."},{n:"Case 10",t:"Already bought one",hits:["D3"],w:"A department considered buying a platform similar to one already licensed."}];
+$('#cases').innerHTML=CASES.map((c,i)=>`<button class="cs rv" data-i="${i}" aria-pressed="false"><small>${c.n}</small><b>“${c.t}”</b><p>${c.w}</p><span class="hits">${c.hits.map(h=>`<span>${h}</span>`).join('')}</span></button>`).join('');
+$$('.cs').forEach(b=>b.addEventListener('click',()=>{ const on=b.getAttribute('aria-pressed')!=='true'; $$('.cs').forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed',on);
+  const hits=on?CASES[+b.dataset.i].hits:[]; $$('.st').forEach(s=>s.classList.toggle('hit',hits.includes(D[+s.dataset.i].c))); }));
+
+/* ---------- count-up, reveal, lifecycle nav ---------- */
+function countUp(el){ const n=+el.dataset.c; if(reduce){ el.textContent=n; return; } const t0=performance.now(); (function f(t){ const p=Math.min(1,(t-t0)/1200); el.textContent=Math.round(n*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(f); })(t0); }
+const S=$$('main section');
+const io=new IntersectionObserver(es=>es.forEach(e=>{ if(!e.isIntersecting) return; const s=e.target; s.classList.add('in');
+  s.querySelectorAll('[data-c]').forEach(countUp);
+  if(s.id==='problem'){ $$('#cb div').forEach((d,k)=>setTimeout(()=>{},0)); $('#cb').classList.add('go'); setTimeout(()=>$('#cg').classList.add('go'),reduce?0:700);
+    $$('#cb div,#cg div').forEach((d,k)=>d.style.transitionDelay=(k%5)*0.12+(k>=5?.7:0)+'s'); }
+  if(s.id==='plan'){ const C=289; setTimeout(()=>{ $('#dn1').setAttribute('stroke-dasharray',`${C*45800/48150} ${C}`); $('#dn2').setAttribute('stroke-dasharray',`${C*2350/48150} ${C}`); $('#dn2').setAttribute('stroke-dashoffset',-(C*45800/48150)); },200); }
+  if(s.id==='status'){ const lastDone=MS.map(m=>m[2]).lastIndexOf('check'); $('#mfill').style.width=pos(MS[lastDone][0])+'%'; }
+  io.unobserve(s); }),{threshold:.1});
+S.forEach(s=>io.observe(s));
+const groups=[["Start","Overview"],["Initiation","Problem & role"],["Planning","Plan & dependencies"],["Execution","The model"],["Monitoring","Governance"],["Closing","Status"]];
+const first={};
+S.forEach(s=>{ const ph=s.dataset.ph; if(!(ph in first)) first[ph]=s.id; });
+$('#life').innerHTML=groups.map(g=>`<a href="#${first[g[0]]}" data-ph="${g[0]}"><small>${g[0]==='Start'?'Overview':g[0]}</small><b>${g[1]}</b></a>`).join('');
+const LA=$$('#life a');
+const nav=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ const ph=e.target.dataset.ph; LA.forEach(a=>a.classList.toggle('on',a.dataset.ph===ph)); } }),{rootMargin:'-45% 0px -50% 0px'});
+S.forEach(s=>nav.observe(s));
+const life=$('#life'); let tk=false;
+addEventListener('scroll',()=>{ if(tk) return; tk=true; requestAnimationFrame(()=>{ life.classList.toggle('show',scrollY>innerHeight*.5); tk=false; }); },{passive:true});
+}catch(err){ document.documentElement.classList.remove('js'); console.error(err); }
+})();
+</script>
+</body>
+</html>
